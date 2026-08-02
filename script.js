@@ -1,0 +1,260 @@
+// ---------- Pages ----------
+const sections = document.querySelectorAll("section");
+
+function showPage(index){
+    sections.forEach((sec,i)=>{
+        if(i===index){
+            sec.classList.remove("hidden");
+        }else{
+            sec.classList.add("hidden");
+        }
+    });
+}
+
+// Home page
+showPage(0);
+
+// ---------- Navigation ----------
+document.getElementById("openBtn").onclick=()=>showPage(1);
+document.getElementById("next1").onclick=()=>showPage(2);
+document.getElementById("next2").onclick=()=>showPage(3);
+document.getElementById("next3").onclick=()=>showPage(4);
+document.getElementById("next4").onclick=()=>showPage(5);
+document.getElementById("next5").onclick=()=>showPage(6);
+
+// ---------- Music ----------
+const song=document.getElementById("song");
+const playBtn=document.getElementById("playMusic");
+
+playBtn.onclick=function(){
+
+if(song.paused){
+
+song.play();
+
+playBtn.innerHTML="⏸ Pause";
+
+}else{
+
+song.pause();
+
+playBtn.innerHTML="▶ Play";
+
+}
+
+}
+
+// ---------- Gallery ----------
+const images=[
+
+"images/photo1.jpg",
+
+"images/photo2.jpg",
+
+"images/photo3.jpg",
+
+"images/photo4.jpg"
+
+];
+
+let current=0;
+
+const slider=document.getElementById("sliderImage");
+
+document.getElementById("next").onclick=function(){
+
+current++;
+
+if(current>=images.length){
+
+current=0;
+
+}
+
+slider.src=images[current];
+
+}
+
+document.getElementById("prev").onclick=function(){
+
+current--;
+
+if(current<0){
+
+current=images.length-1;
+
+}
+
+slider.src=images[current];
+
+}
+
+// ---------- Spin Wheel ----------
+
+const canvas=document.getElementById("wheelCanvas");
+
+const ctx=canvas.getContext("2d");
+
+const reasons=[
+
+"Your Smile 😊",
+
+"You Make Me Better ❤️",
+
+"Being With You Feels Home 🏠",
+
+"I Miss You 🌸",
+
+"I Trust You 💖",
+
+"You Are My Favourite 🥰"
+
+];
+
+const colors=[
+
+"#f8b4ff",
+
+"#d5b8ff"
+
+];
+
+function drawWheel(){
+
+let angle=(Math.PI*2)/reasons.length;
+
+for(let i=0;i<reasons.length;i++){
+
+ctx.beginPath();
+
+ctx.moveTo(160,160);
+
+ctx.arc(160,160,150,
+
+angle*i,
+
+angle*(i+1));
+
+ctx.fillStyle=colors[i%2];
+
+ctx.fill();
+
+ctx.save();
+
+ctx.translate(160,160);
+
+ctx.rotate(angle*i+angle/2);
+
+ctx.fillStyle="#333";
+
+ctx.font="16px Poppins";
+
+ctx.fillText(reasons[i],60,0);
+
+ctx.restore();
+
+}
+
+}
+
+drawWheel();
+
+document.getElementById("spin").onclick=function(){
+
+let random=Math.floor(Math.random()*reasons.length);
+
+document.getElementById("result").innerHTML=
+
+"❤️ "+reasons[random];
+
+}
+
+// ---------- Scratch Card ----------
+
+const scratch=document.getElementById("scratchCanvas");
+
+const sctx=scratch.getContext("2d");
+
+scratch.width=320;
+
+scratch.height=140;
+
+sctx.fillStyle="#b784ff";
+
+sctx.fillRect(0,0,320,140);
+
+sctx.fillStyle="#fff";
+
+sctx.font="25px Poppins";
+
+sctx.fillText("Scratch Here ❤️",60,75);
+
+let isDown=false;
+
+scratch.addEventListener("mousedown",()=>{
+
+isDown=true;
+
+});
+
+scratch.addEventListener("mouseup",()=>{
+
+isDown=false;
+
+});
+
+scratch.addEventListener("mousemove",function(e){
+
+if(!isDown)return;
+
+const rect=scratch.getBoundingClientRect();
+
+const x=e.clientX-rect.left;
+
+const y=e.clientY-rect.top;
+
+sctx.globalCompositeOperation="destination-out";
+
+sctx.beginPath();
+
+sctx.arc(x,y,18,0,Math.PI*2);
+
+sctx.fill();
+
+});
+
+// Mobile Touch
+
+scratch.addEventListener("touchmove",function(e){
+
+const rect=scratch.getBoundingClientRect();
+
+const x=e.touches[0].clientX-rect.left;
+
+const y=e.touches[0].clientY-rect.top;
+
+sctx.globalCompositeOperation="destination-out";
+
+sctx.beginPath();
+
+sctx.arc(x,y,20,0,Math.PI*2);
+
+sctx.fill();
+
+});
+
+// ---------- Auto Slider ----------
+
+setInterval(function(){
+
+current++;
+
+if(current>=images.length){
+
+current=0;
+
+}
+
+slider.src=images[current];
+
+},4000);
