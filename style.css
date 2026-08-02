@@ -350,3 +350,125 @@ transition:.4s;
 transform:scale(1.03);
 
 }
+/* =========================
+   PREMIUM SPIN WHEEL
+========================= */
+
+.wheel-box{
+position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
+margin:30px 0;
+}
+
+#pointer{
+position:absolute;
+top:-20px;
+font-size:35px;
+color:#ff3366;
+font-weight:bold;
+z-index:100;
+}
+
+#wheelCanvas{
+background:#fff;
+border-radius:50%;
+box-shadow:0 20px 45px rgba(0,0,0,.15);
+transition:transform 5s cubic-bezier(.17,.67,.25,1);
+}
+
+/* =========================
+   CONFETTI
+========================= */
+
+.confetti{
+position:fixed;
+top:-20px;
+width:12px;
+height:12px;
+z-index:9999;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+
+0%{
+transform:translateY(0) rotate(0deg);
+opacity:1;
+}
+
+100%{
+transform:translateY(110vh) rotate(720deg);
+opacity:0;
+}
+
+}
+
+/* =========================
+   BUTTON EFFECT
+========================= */
+
+button{
+transition:.3s;
+}
+
+button:hover{
+transform:translateY(-4px) scale(1.05);
+box-shadow:0 0 30px #b965ff;
+}
+
+button:active{
+transform:scale(.95);
+}
+
+/* =========================
+   GALLERY IMAGE EFFECT
+========================= */
+
+.slider img:hover{
+transform:scale(1.03);
+}
+
+/* =========================
+   MUSIC CARD
+========================= */
+
+.music-card:hover{
+transform:translateY(-8px);
+}
+
+/* =========================
+   FINAL PAGE
+========================= */
+
+.last h1{
+font-size:60px;
+}
+
+.last h2{
+margin-top:20px;
+color:#ff4da6;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+#wheelCanvas{
+width:280px;
+height:280px;
+}
+
+#pointer{
+font-size:30px;
+top:-18px;
+}
+
+.last h1{
+font-size:42px;
+}
+
+}
