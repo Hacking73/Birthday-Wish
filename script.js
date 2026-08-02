@@ -258,3 +258,73 @@ current=0;
 slider.src=images[current];
 
 },4000);
+// Floating Hearts
+
+setInterval(function(){
+
+const heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="💜";
+
+heart.style.left=Math.random()*100+"%";
+
+heart.style.animationDuration=
+
+(4+Math.random()*4)+"s";
+
+heart.style.fontSize=
+
+20+Math.random()*25+"px";
+
+document.getElementById("hearts").appendChild(heart);
+
+setTimeout(()=>{
+
+heart.remove();
+
+},8000);
+
+},500);
+
+
+// Auto Play Music
+
+window.addEventListener("click",()=>{
+
+song.play().catch(()=>{});
+
+},{once:true});
+
+
+// Smooth Scroll Top
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+
+// Button Click Effect
+
+document.querySelectorAll("button")
+
+.forEach(btn=>{
+
+btn.addEventListener("click",()=>{
+
+btn.style.transform="scale(.92)";
+
+setTimeout(()=>{
+
+btn.style.transform="scale(1)";
+
+},150);
+
+});
+
+});
