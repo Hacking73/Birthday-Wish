@@ -17,7 +17,15 @@ showPage(0);
 // ---------- Navigation ----------
 document.getElementById("openBtn").onclick=()=>showPage(1);
 document.getElementById("next1").onclick=()=>showPage(2);
-document.getElementById("next2").onclick=()=>showPage(3);
+document.getElementById("next2").onclick = () => {
+    showPage(3);
+
+    // Wheel redraw after page opens
+    setTimeout(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawWheel();
+    }, 100);
+};
 document.getElementById("next3").onclick=()=>showPage(4);
 document.getElementById("next4").onclick=()=>showPage(5);
 document.getElementById("next5").onclick = function () {
