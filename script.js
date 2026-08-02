@@ -67,35 +67,31 @@ const images=[
 
 ];
 
-let current=0;
+let rotation = 0;
 
-const slider=document.getElementById("sliderImage");
+document.getElementById("spin").onclick = function(){
 
-document.getElementById("next").onclick=function(){
+    const random = Math.floor(Math.random()*reasons.length);
 
-current++;
+    rotation += 360*5 + random*60;
 
-if(current>=images.length){
+    canvas.style.transition = "transform 5s cubic-bezier(.17,.67,.2,1)";
+    canvas.style.transform = `rotate(${rotation}deg)`;
 
-current=0;
+    document.getElementById("spin").disabled = true;
 
-}
+    setTimeout(()=>{
 
-slider.src=images[current];
+        document.getElementById("result").innerHTML =
+        "❤️ " + reasons[random];
 
-}
+        document.getElementById("spin").disabled = false;
 
-document.getElementById("prev").onclick=function(){
+        confetti();
 
-current--;
-
-if(current<0){
-
-current=images.length-1;
+    },5000);
 
 }
-
-slider.src=images[current];
 
 }
 
@@ -106,18 +102,13 @@ const canvas=document.getElementById("wheelCanvas");
 const ctx=canvas.getContext("2d");
 
 const reasons=[
-
 "Your Smile 😊",
-
-"You Make Me Better ❤️",
-
-"Being With You Feels Home 🏠",
-
-"I Miss You 🌸",
-
-"I Trust You 💖",
-
-"You Are My Favourite 🥰"
+"My Safe Place 🏡",
+"My Happiness 💜",
+"My Forever ❤️",
+"My Best Friend 🌸",
+"My Everything 👑"
+];
 
 ];
 
