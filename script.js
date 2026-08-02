@@ -20,8 +20,10 @@ document.getElementById("next1").onclick=()=>showPage(2);
 document.getElementById("next2").onclick=()=>showPage(3);
 document.getElementById("next3").onclick=()=>showPage(4);
 document.getElementById("next4").onclick=()=>showPage(5);
-document.getElementById("next5").onclick=()=>showPage(6);
-
+document.getElementById("next5").onclick = function () {
+    showPage(6);
+    confetti();
+};
 // ---------- Music ----------
 const song=document.getElementById("song");
 const playBtn=document.getElementById("playMusic");
@@ -159,13 +161,24 @@ ctx.restore();
 
 drawWheel();
 
-document.getElementById("spin").onclick=function(){
+let rotation = 0;
 
-let random=Math.floor(Math.random()*reasons.length);
+document.getElementById("spin").onclick = function () {
 
-document.getElementById("result").innerHTML=
+    const random = Math.floor(Math.random() * reasons.length);
 
-"❤️ "+reasons[random];
+    rotation += 1800 + (random * 60);
+
+    canvas.style.transform = "rotate(" + rotation + "deg)";
+
+    setTimeout(() => {
+
+        document.getElementById("result").innerHTML =
+            "❤️ " + reasons[random];
+
+        confetti();
+
+    }, 5000);
 
 }
 
@@ -328,3 +341,37 @@ btn.style.transform="scale(1)";
 });
 
 });
+function confetti(){
+
+const colors=[
+"#ff4d6d",
+"#ffb703",
+"#06d6a0",
+"#8ecae6",
+"#b5179e",
+"#7b2cbf"
+];
+
+for(let i=0;i<120;i++){
+
+const c=document.createElement("div");
+
+c.className="confetti";
+
+c.style.left=Math.random()*100+"vw";
+
+c.style.background=
+colors[Math.floor(Math.random()*colors.length)];
+
+c.style.animationDuration=
+(3+Math.random()*2)+"s";
+
+document.body.appendChild(c);
+
+setTimeout(()=>{
+c.remove();
+},5000);
+
+}
+
+}
