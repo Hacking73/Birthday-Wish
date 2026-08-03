@@ -9,11 +9,7 @@ const sections = document.querySelectorAll("section");
 // ---------- Show Page ----------
 function showPage(index) {
     sections.forEach((section, i) => {
-        if (i === index) {
-            section.classList.remove("hidden");
-        } else {
-            section.classList.add("hidden");
-        }
+        section.classList.toggle("hidden", i !== index);
     });
 
     window.scrollTo({
@@ -22,75 +18,51 @@ function showPage(index) {
     });
 }
 
-// First Page
+// Show Home Page
 showPage(0);
 
-// ---------- Navigation ----------
-const openBtn = document.getElementById("openBtn");
-const next1 = document.getElementById("next1");
-const next2 = document.getElementById("next2");
-const next3 = document.getElementById("next3");
-const next4 = document.getElementById("next4");
-const next5 = document.getElementById("next5");
+// =====================================
+// NAVIGATION
+// =====================================
 
-if (openBtn) {
-    openBtn.addEventListener("click", () => showPage(1));
-}
+document.getElementById("openBtn")?.addEventListener("click", () => showPage(1));
+document.getElementById("next1")?.addEventListener("click", () => showPage(2));
+document.getElementById("next2")?.addEventListener("click", () => showPage(3));
+document.getElementById("next3")?.addEventListener("click", () => showPage(4));
+document.getElementById("next4")?.addEventListener("click", () => showPage(5));
+document.getElementById("next5")?.addEventListener("click", () => {
+    showPage(6);
 
-if (next1) {
-    next1.addEventListener("click", () => showPage(2));
-}
-
-if (next2) {
-    next2.addEventListener("click", () => showPage(3));
-}
-
-if (next3) {
-    next3.addEventListener("click", () => showPage(4));
-}
-
-if (next4) {
-    next4.addEventListener("click", () => showPage(5));
-}
-
-if (next5) {
-    next5.addEventListener("click", () => {
-        showPage(6);
-
-        if (typeof confetti === "function") {
-            confetti();
-        }
-    });
-}
+    if (typeof confetti === "function") {
+        confetti();
+    }
+});
 
 // =====================================
-// MUSIC
+// MUSIC PLAYER
 // =====================================
 
 const song = document.getElementById("song");
 const playBtn = document.getElementById("playMusic");
 
-if (playBtn && song) {
+if (song && playBtn) {
 
     playBtn.addEventListener("click", () => {
 
         if (song.paused) {
 
             song.play().catch(() => {});
-
-            playBtn.innerHTML = "⏸ Pause Music";
+            playBtn.textContent = "⏸ Pause Music";
 
         } else {
 
             song.pause();
-
-            playBtn.innerHTML = "▶ Play Music";
+            playBtn.textContent = "▶ Play Music";
 
         }
 
     });
 
-    // Browser autoplay after first click
     document.addEventListener("click", () => {
         song.play().catch(() => {});
     }, { once: true });
@@ -101,7 +73,7 @@ if (playBtn && song) {
 // PHOTO GALLERY
 // =====================================
 
-const slider = document.getElementById("sliderImage");
+const sliderImage = document.getElementById("sliderImage");
 
 const images = [
     "images/photo1.jpg",
@@ -114,82 +86,54 @@ let current = 0;
 
 function showImage(index) {
 
-    if (!slider) return;
+    if (!sliderImage) return;
 
-    slider.style.opacity = "0";
+    sliderImage.style.opacity = "0";
 
     setTimeout(() => {
 
-        slider.src = images[index];
-
-        slider.style.opacity = "1";
+        sliderImage.src = images[index];
+        sliderImage.style.opacity = "1";
 
     }, 200);
-
 }
 
 // Next Image
-const nextBtn = document.getElementById("next");
+document.getElementById("next")?.addEventListener("click", () => {
 
-if (nextBtn) {
+    current++;
 
-    nextBtn.addEventListener("click", () => {
+    if (current >= images.length) current = 0;
 
-        current++;
+    showImage(current);
 
-        if (current >= images.length) {
-            current = 0;
-        }
-
-        showImage(current);
-
-    });
-
-}
+});
 
 // Previous Image
-const prevBtn = document.getElementById("prev");
+document.getElementById("prev")?.addEventListener("click", () => {
 
-if (prevBtn) {
+    current--;
 
-    prevBtn.addEventListener("click", () => {
+    if (current < 0) current = images.length - 1;
 
-        current--;
+    showImage(current);
 
-        if (current < 0) {
-            current = images.length - 1;
-        }
-
-        showImage(current);
-
-    });
-
-}
+});
 
 // Auto Slider
-if (slider) {
+setInterval(() => {
 
-    setInterval(() => {
+    current++;
 
-        current++;
+    if (current >= images.length) current = 0;
 
-        if (current >= images.length) {
-            current = 0;
-        }
+    showImage(current);
 
-        showImage(current);
+}, 4000);
 
-    }, 4000);
-
-}
-
-// Load First Image
+// First Image
 window.addEventListener("load", () => {
-
-    if (slider) {
-        showImage(current);
-    }
-
+    showImage(current);
 });
 // =====================================
 // SCRIPT.JS - PART 2
@@ -214,12 +158,12 @@ if (canvas) {
     ];
 
     const colors = [
-        "#ffd6ec",
-        "#d9b8ff",
-        "#ffc8dd",
-        "#cdb4db",
-        "#bde0fe",
-        "#ffcfd2"
+        "#FFD6EC",
+        "#D9B8FF",
+        "#FFC8DD",
+        "#CDB4DB",
+        "#BDE0FE",
+        "#FFCFD2"
     ];
 
     let rotation = 0;
@@ -233,7 +177,7 @@ if (canvas) {
         for (let i = 0; i < reasons.length; i++) {
 
             ctx.beginPath();
-            ctx.moveTo(160,160);
+            ctx.moveTo(160, 160);
 
             ctx.arc(
                 160,
@@ -248,57 +192,48 @@ if (canvas) {
 
             ctx.save();
 
-            ctx.translate(160,160);
+            ctx.translate(160, 160);
             ctx.rotate(i * arc + arc / 2);
 
             ctx.fillStyle = "#333";
             ctx.font = "bold 16px Poppins";
             ctx.textAlign = "center";
 
-            ctx.fillText(reasons[i],95,5);
+            ctx.fillText(reasons[i], 95, 5);
 
             ctx.restore();
         }
+
     }
 
     drawWheel();
 
-    const spinBtn = document.getElementById("spin");
+    document.getElementById("spin")?.addEventListener("click", () => {
 
-    if (spinBtn) {
+        const random = Math.floor(Math.random() * reasons.length);
 
-        spinBtn.addEventListener("click", () => {
+        rotation += 1800 + random * 60;
 
-            const random = Math.floor(Math.random() * reasons.length);
+        canvas.style.transform = `rotate(${rotation}deg)`;
 
-            rotation += 1800 + random * 60;
+        const spinBtn = document.getElementById("spin");
 
-            canvas.style.transform =
-                `rotate(${rotation}deg)`;
+        spinBtn.disabled = true;
 
-            spinBtn.disabled = true;
+        setTimeout(() => {
 
-            setTimeout(() => {
+            document.getElementById("result").innerHTML =
+                "❤️ " + reasons[random];
 
-                const result =
-                    document.getElementById("result");
+            spinBtn.disabled = false;
 
-                if (result) {
-                    result.innerHTML =
-                        "❤️ " + reasons[random];
-                }
+            if (typeof confetti === "function") {
+                confetti();
+            }
 
-                spinBtn.disabled = false;
+        }, 5000);
 
-                if (typeof confetti === "function") {
-                    confetti();
-                }
-
-            },5000);
-
-        });
-
-    }
+    });
 
 }
 
@@ -315,20 +250,14 @@ if (scratch) {
     scratch.width = 320;
     scratch.height = 140;
 
-    function resetScratch(){
+    function resetScratch() {
 
-        sctx.globalCompositeOperation =
-            "source-over";
+        sctx.globalCompositeOperation = "source-over";
 
-        sctx.fillStyle = "#b784ff";
-        sctx.fillRect(
-            0,
-            0,
-            scratch.width,
-            scratch.height
-        );
+        sctx.fillStyle = "#B784FF";
+        sctx.fillRect(0, 0, scratch.width, scratch.height);
 
-        sctx.fillStyle = "#ffffff";
+        sctx.fillStyle = "#fff";
         sctx.font = "bold 24px Poppins";
         sctx.textAlign = "center";
 
@@ -337,44 +266,32 @@ if (scratch) {
             scratch.width / 2,
             75
         );
-
     }
 
     resetScratch();
 
     let scratching = false;
 
-    function scratchMove(x,y){
+    function scratchMove(x, y) {
 
-        sctx.globalCompositeOperation =
-            "destination-out";
+        sctx.globalCompositeOperation = "destination-out";
 
         sctx.beginPath();
-        sctx.arc(x,y,22,0,Math.PI*2);
+        sctx.arc(x, y, 22, 0, Math.PI * 2);
         sctx.fill();
 
     }
 
     // Mouse
+    scratch.addEventListener("mousedown", () => scratching = true);
+    scratch.addEventListener("mouseup", () => scratching = false);
+    scratch.addEventListener("mouseleave", () => scratching = false);
 
-    scratch.addEventListener("mousedown",()=>{
-        scratching=true;
-    });
+    scratch.addEventListener("mousemove", (e) => {
 
-    scratch.addEventListener("mouseup",()=>{
-        scratching=false;
-    });
+        if (!scratching) return;
 
-    scratch.addEventListener("mouseleave",()=>{
-        scratching=false;
-    });
-
-    scratch.addEventListener("mousemove",(e)=>{
-
-        if(!scratching) return;
-
-        const rect =
-            scratch.getBoundingClientRect();
+        const rect = scratch.getBoundingClientRect();
 
         scratchMove(
             e.clientX - rect.left,
@@ -384,35 +301,30 @@ if (scratch) {
     });
 
     // Touch
+    scratch.addEventListener("touchstart", () => scratching = true);
+    scratch.addEventListener("touchend", () => scratching = false);
 
-    scratch.addEventListener("touchstart",()=>{
-        scratching=true;
-    });
+    scratch.addEventListener("touchmove", (e) => {
 
-    scratch.addEventListener("touchend",()=>{
-        scratching=false;
-    });
-
-    scratch.addEventListener("touchmove",(e)=>{
-
-        if(!scratching) return;
+        if (!scratching) return;
 
         e.preventDefault();
 
-        const rect =
-            scratch.getBoundingClientRect();
+        const rect = scratch.getBoundingClientRect();
 
         scratchMove(
             e.touches[0].clientX - rect.left,
             e.touches[0].clientY - rect.top
         );
 
-    },{passive:false});
+    }, { passive: false });
+
+    document.getElementById("next4")?.addEventListener("click", resetScratch);
 
 }
 // =====================================
 // SCRIPT.JS - PART 3
-// Floating Hearts + Confetti + Final
+// Floating Hearts + Confetti + Keyboard
 // =====================================
 
 // ---------- Floating Hearts ----------
@@ -483,7 +395,6 @@ function confetti() {
 
         piece.style.left = Math.random() * 100 + "vw";
         piece.style.top = "-20px";
-
         piece.style.background =
             colors[Math.floor(Math.random() * colors.length)];
 
@@ -501,12 +412,12 @@ function confetti() {
 }
 
 // =====================================
-// GALLERY KEYBOARD SUPPORT
+// KEYBOARD SUPPORT (Gallery)
 // =====================================
 
 document.addEventListener("keydown", (e) => {
 
-    if (!sections || sections.length < 3) return;
+    if (sections.length < 3) return;
 
     if (sections[2].classList.contains("hidden")) return;
 
@@ -546,6 +457,6 @@ window.addEventListener("load", () => {
         showImage(current);
     }
 
-    console.log("❤️ Birthday Surprise Loaded Successfully ❤️");
+    console.log("❤️ Girlfriend's Day Surprise Loaded Successfully ❤️");
 
 });
