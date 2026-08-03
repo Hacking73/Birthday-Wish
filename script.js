@@ -1,5 +1,4 @@
 // =====================================
-// BIRTHDAY SURPRISE
 // SCRIPT.JS - PART 1
 // Navigation + Music + Gallery
 // =====================================
@@ -7,6 +6,7 @@
 // ---------- Sections ----------
 const sections = document.querySelectorAll("section");
 
+// ---------- Show Page ----------
 function showPage(index) {
     sections.forEach((section, i) => {
         if (i === index) {
@@ -22,37 +22,46 @@ function showPage(index) {
     });
 }
 
-// Home Page
+// First Page
 showPage(0);
 
 // ---------- Navigation ----------
-document.getElementById("openBtn").addEventListener("click", () => {
-    showPage(1);
-});
+const openBtn = document.getElementById("openBtn");
+const next1 = document.getElementById("next1");
+const next2 = document.getElementById("next2");
+const next3 = document.getElementById("next3");
+const next4 = document.getElementById("next4");
+const next5 = document.getElementById("next5");
 
-document.getElementById("next1").addEventListener("click", () => {
-    showPage(2);
-});
+if (openBtn) {
+    openBtn.addEventListener("click", () => showPage(1));
+}
 
-document.getElementById("next2").addEventListener("click", () => {
-    showPage(3);
-});
+if (next1) {
+    next1.addEventListener("click", () => showPage(2));
+}
 
-document.getElementById("next3").addEventListener("click", () => {
-    showPage(4);
-});
+if (next2) {
+    next2.addEventListener("click", () => showPage(3));
+}
 
-document.getElementById("next4").addEventListener("click", () => {
-    showPage(5);
-});
+if (next3) {
+    next3.addEventListener("click", () => showPage(4));
+}
 
-document.getElementById("next5").addEventListener("click", () => {
-    showPage(6);
+if (next4) {
+    next4.addEventListener("click", () => showPage(5));
+}
 
-    if (typeof confetti === "function") {
-        confetti();
-    }
-});
+if (next5) {
+    next5.addEventListener("click", () => {
+        showPage(6);
+
+        if (typeof confetti === "function") {
+            confetti();
+        }
+    });
+}
 
 // =====================================
 // MUSIC
@@ -61,33 +70,35 @@ document.getElementById("next5").addEventListener("click", () => {
 const song = document.getElementById("song");
 const playBtn = document.getElementById("playMusic");
 
-playBtn.addEventListener("click", () => {
+if (playBtn && song) {
 
-    if (song.paused) {
+    playBtn.addEventListener("click", () => {
 
-        song.play();
+        if (song.paused) {
 
-        playBtn.textContent = "⏸ Pause Music";
+            song.play().catch(() => {});
 
-    } else {
+            playBtn.innerHTML = "⏸ Pause Music";
 
-        song.pause();
+        } else {
 
-        playBtn.textContent = "▶ Play Music";
+            song.pause();
 
-    }
+            playBtn.innerHTML = "▶ Play Music";
 
-});
+        }
 
-// Auto Play (Browser Permission)
-window.addEventListener("click", () => {
+    });
 
-    song.play().catch(() => {});
+    // Browser autoplay after first click
+    document.addEventListener("click", () => {
+        song.play().catch(() => {});
+    }, { once: true });
 
-}, { once: true });
+}
 
 // =====================================
-// GALLERY
+// PHOTO GALLERY
 // =====================================
 
 const slider = document.getElementById("sliderImage");
@@ -117,272 +128,322 @@ function showImage(index) {
 
 }
 
-// Next
-document.getElementById("next").addEventListener("click", () => {
+// Next Image
+const nextBtn = document.getElementById("next");
 
-    current++;
+if (nextBtn) {
 
-    if (current >= images.length) {
-        current = 0;
-    }
+    nextBtn.addEventListener("click", () => {
 
-    showImage(current);
+        current++;
 
-});
+        if (current >= images.length) {
+            current = 0;
+        }
 
-// Previous
-document.getElementById("prev").addEventListener("click", () => {
+        showImage(current);
 
-    current--;
+    });
 
-    if (current < 0) {
-        current = images.length - 1;
-    }
+}
 
-    showImage(current);
+// Previous Image
+const prevBtn = document.getElementById("prev");
 
-});
+if (prevBtn) {
+
+    prevBtn.addEventListener("click", () => {
+
+        current--;
+
+        if (current < 0) {
+            current = images.length - 1;
+        }
+
+        showImage(current);
+
+    });
+
+}
 
 // Auto Slider
-setInterval(() => {
+if (slider) {
 
-    current++;
+    setInterval(() => {
 
-    if (current >= images.length) {
-        current = 0;
-    }
+        current++;
 
-    showImage(current);
+        if (current >= images.length) {
+            current = 0;
+        }
 
-}, 4000);
+        showImage(current);
+
+    }, 4000);
+
+}
 
 // Load First Image
 window.addEventListener("load", () => {
 
-    showImage(current);
+    if (slider) {
+        showImage(current);
+    }
 
 });
 // =====================================
 // SCRIPT.JS - PART 2
-// SPIN WHEEL + SCRATCH CARD
+// Spin Wheel + Scratch Card
 // =====================================
 
 // ---------- Spin Wheel ----------
 
 const canvas = document.getElementById("wheelCanvas");
-const ctx = canvas.getContext("2d");
 
-const reasons = [
-    "Your Smile 😊",
-    "My Happiness ❤️",
-    "My Safe Place 🏡",
-    "My Best Friend 🌸",
-    "My Forever 💖",
-    "My Everything 👑"
-];
+if (canvas) {
 
-const colors = [
-    "#ffd6ec",
-    "#d9b8ff",
-    "#ffc8dd",
-    "#cdb4db",
-    "#bde0fe",
-    "#ffcfd2"
-];
+    const ctx = canvas.getContext("2d");
 
-let rotation = 0;
+    const reasons = [
+        "Your Smile 😊",
+        "My Happiness ❤️",
+        "My Safe Place 🏡",
+        "My Best Friend 🌸",
+        "My Forever 💖",
+        "My Everything 👑"
+    ];
 
-function drawWheel() {
+    const colors = [
+        "#ffd6ec",
+        "#d9b8ff",
+        "#ffc8dd",
+        "#cdb4db",
+        "#bde0fe",
+        "#ffcfd2"
+    ];
 
-    const arc = (Math.PI * 2) / reasons.length;
+    let rotation = 0;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    function drawWheel() {
 
-    for (let i = 0; i < reasons.length; i++) {
+        const arc = (Math.PI * 2) / reasons.length;
 
-        ctx.beginPath();
-        ctx.moveTo(160, 160);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        ctx.arc(
-            160,
-            160,
-            150,
-            i * arc,
-            (i + 1) * arc
-        );
+        for (let i = 0; i < reasons.length; i++) {
 
-        ctx.fillStyle = colors[i];
-        ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(160,160);
 
-        ctx.save();
+            ctx.arc(
+                160,
+                160,
+                150,
+                i * arc,
+                (i + 1) * arc
+            );
 
-        ctx.translate(160, 160);
-        ctx.rotate(i * arc + arc / 2);
+            ctx.fillStyle = colors[i];
+            ctx.fill();
 
-        ctx.fillStyle = "#333";
-        ctx.font = "16px Poppins";
-        ctx.textAlign = "center";
+            ctx.save();
 
-        ctx.fillText(reasons[i], 95, 5);
+            ctx.translate(160,160);
+            ctx.rotate(i * arc + arc / 2);
 
-        ctx.restore();
-    }
-}
+            ctx.fillStyle = "#333";
+            ctx.font = "bold 16px Poppins";
+            ctx.textAlign = "center";
 
-drawWheel();
+            ctx.fillText(reasons[i],95,5);
 
-const spinBtn = document.getElementById("spin");
-
-spinBtn.addEventListener("click", () => {
-
-    const random = Math.floor(Math.random() * reasons.length);
-
-    rotation += 1800 + random * 60;
-
-    canvas.style.transform = `rotate(${rotation}deg)`;
-
-    spinBtn.disabled = true;
-
-    setTimeout(() => {
-
-        document.getElementById("result").innerHTML =
-            "❤️ " + reasons[random];
-
-        spinBtn.disabled = false;
-
-        if (typeof confetti === "function") {
-            confetti();
+            ctx.restore();
         }
+    }
 
-    }, 5000);
+    drawWheel();
 
-});
+    const spinBtn = document.getElementById("spin");
+
+    if (spinBtn) {
+
+        spinBtn.addEventListener("click", () => {
+
+            const random = Math.floor(Math.random() * reasons.length);
+
+            rotation += 1800 + random * 60;
+
+            canvas.style.transform =
+                `rotate(${rotation}deg)`;
+
+            spinBtn.disabled = true;
+
+            setTimeout(() => {
+
+                const result =
+                    document.getElementById("result");
+
+                if (result) {
+                    result.innerHTML =
+                        "❤️ " + reasons[random];
+                }
+
+                spinBtn.disabled = false;
+
+                if (typeof confetti === "function") {
+                    confetti();
+                }
+
+            },5000);
+
+        });
+
+    }
+
+}
 
 // =====================================
 // SCRATCH CARD
 // =====================================
 
 const scratch = document.getElementById("scratchCanvas");
-const sctx = scratch.getContext("2d");
 
-scratch.width = 320;
-scratch.height = 140;
+if (scratch) {
 
-function resetScratch() {
+    const sctx = scratch.getContext("2d");
 
-    sctx.globalCompositeOperation = "source-over";
+    scratch.width = 320;
+    scratch.height = 140;
 
-    sctx.fillStyle = "#b784ff";
-    sctx.fillRect(0, 0, scratch.width, scratch.height);
+    function resetScratch(){
 
-    sctx.fillStyle = "#ffffff";
-    sctx.font = "bold 24px Poppins";
-    sctx.textAlign = "center";
+        sctx.globalCompositeOperation =
+            "source-over";
 
-    sctx.fillText(
-        "Scratch Here ❤️",
-        scratch.width / 2,
-        75
-    );
+        sctx.fillStyle = "#b784ff";
+        sctx.fillRect(
+            0,
+            0,
+            scratch.width,
+            scratch.height
+        );
+
+        sctx.fillStyle = "#ffffff";
+        sctx.font = "bold 24px Poppins";
+        sctx.textAlign = "center";
+
+        sctx.fillText(
+            "Scratch Here ❤️",
+            scratch.width / 2,
+            75
+        );
+
+    }
+
+    resetScratch();
+
+    let scratching = false;
+
+    function scratchMove(x,y){
+
+        sctx.globalCompositeOperation =
+            "destination-out";
+
+        sctx.beginPath();
+        sctx.arc(x,y,22,0,Math.PI*2);
+        sctx.fill();
+
+    }
+
+    // Mouse
+
+    scratch.addEventListener("mousedown",()=>{
+        scratching=true;
+    });
+
+    scratch.addEventListener("mouseup",()=>{
+        scratching=false;
+    });
+
+    scratch.addEventListener("mouseleave",()=>{
+        scratching=false;
+    });
+
+    scratch.addEventListener("mousemove",(e)=>{
+
+        if(!scratching) return;
+
+        const rect =
+            scratch.getBoundingClientRect();
+
+        scratchMove(
+            e.clientX - rect.left,
+            e.clientY - rect.top
+        );
+
+    });
+
+    // Touch
+
+    scratch.addEventListener("touchstart",()=>{
+        scratching=true;
+    });
+
+    scratch.addEventListener("touchend",()=>{
+        scratching=false;
+    });
+
+    scratch.addEventListener("touchmove",(e)=>{
+
+        if(!scratching) return;
+
+        e.preventDefault();
+
+        const rect =
+            scratch.getBoundingClientRect();
+
+        scratchMove(
+            e.touches[0].clientX - rect.left,
+            e.touches[0].clientY - rect.top
+        );
+
+    },{passive:false});
 
 }
-
-resetScratch();
-
-let scratching = false;
-
-function scratchMove(x, y) {
-
-    sctx.globalCompositeOperation = "destination-out";
-
-    sctx.beginPath();
-    sctx.arc(x, y, 22, 0, Math.PI * 2);
-    sctx.fill();
-
-}
-
-// Mouse
-
-scratch.addEventListener("mousedown", () => scratching = true);
-
-scratch.addEventListener("mouseup", () => scratching = false);
-
-scratch.addEventListener("mouseleave", () => scratching = false);
-
-scratch.addEventListener("mousemove", (e) => {
-
-    if (!scratching) return;
-
-    const rect = scratch.getBoundingClientRect();
-
-    scratchMove(
-        e.clientX - rect.left,
-        e.clientY - rect.top
-    );
-
-});
-
-// Touch
-
-scratch.addEventListener("touchstart", () => {
-
-    scratching = true;
-
-});
-
-scratch.addEventListener("touchend", () => {
-
-    scratching = false;
-
-});
-
-scratch.addEventListener("touchmove", (e) => {
-
-    if (!scratching) return;
-
-    e.preventDefault();
-
-    const rect = scratch.getBoundingClientRect();
-
-    scratchMove(
-        e.touches[0].clientX - rect.left,
-        e.touches[0].clientY - rect.top
-    );
-
-}, {
-    passive: false
-});
 // =====================================
 // SCRIPT.JS - PART 3
-// FLOATING HEARTS + CONFETTI
-// BUTTON EFFECTS + KEYBOARD
+// Floating Hearts + Confetti + Final
 // =====================================
 
 // ---------- Floating Hearts ----------
 
 const heartsContainer = document.getElementById("hearts");
 
-setInterval(() => {
+if (heartsContainer) {
 
-    const heart = document.createElement("div");
+    setInterval(() => {
 
-    heart.className = "heart";
-    heart.innerHTML = "💜";
+        const heart = document.createElement("div");
 
-    heart.style.left = Math.random() * 100 + "%";
-    heart.style.fontSize = (20 + Math.random() * 20) + "px";
-    heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+        heart.className = "heart";
+        heart.innerHTML = "💜";
 
-    heartsContainer.appendChild(heart);
+        heart.style.left = Math.random() * 100 + "%";
+        heart.style.fontSize = (18 + Math.random() * 20) + "px";
+        heart.style.animationDuration = (4 + Math.random() * 4) + "s";
 
-    setTimeout(() => {
-        heart.remove();
-    }, 8000);
+        heartsContainer.appendChild(heart);
 
-}, 600);
+        setTimeout(() => {
+            heart.remove();
+        }, 8000);
+
+    }, 600);
+
+}
 
 // =====================================
-// BUTTON EFFECT
+// BUTTON CLICK EFFECT
 // =====================================
 
 document.querySelectorAll("button").forEach(button => {
@@ -392,9 +453,7 @@ document.querySelectorAll("button").forEach(button => {
         button.style.transform = "scale(.95)";
 
         setTimeout(() => {
-
             button.style.transform = "";
-
         }, 150);
 
     });
@@ -423,6 +482,8 @@ function confetti() {
         piece.className = "confetti";
 
         piece.style.left = Math.random() * 100 + "vw";
+        piece.style.top = "-20px";
+
         piece.style.background =
             colors[Math.floor(Math.random() * colors.length)];
 
@@ -440,19 +501,22 @@ function confetti() {
 }
 
 // =====================================
-// KEYBOARD GALLERY SUPPORT
+// GALLERY KEYBOARD SUPPORT
 // =====================================
 
 document.addEventListener("keydown", (e) => {
 
-    // Gallery page visible?
+    if (!sections || sections.length < 3) return;
+
     if (sections[2].classList.contains("hidden")) return;
 
     if (e.key === "ArrowRight") {
 
         current++;
 
-        if (current >= images.length) current = 0;
+        if (current >= images.length) {
+            current = 0;
+        }
 
         showImage(current);
 
@@ -462,22 +526,12 @@ document.addEventListener("keydown", (e) => {
 
         current--;
 
-        if (current < 0) current = images.length - 1;
+        if (current < 0) {
+            current = images.length - 1;
+        }
 
         showImage(current);
 
-    }
-
-});
-
-// =====================================
-// RESET SCRATCH WHEN OPENING PAGE
-// =====================================
-
-document.getElementById("next4").addEventListener("click", () => {
-
-    if (typeof resetScratch === "function") {
-        resetScratch();
     }
 
 });
@@ -488,16 +542,10 @@ document.getElementById("next4").addEventListener("click", () => {
 
 window.addEventListener("load", () => {
 
-    showImage(current);
-
-    if (typeof resetScratch === "function") {
-        resetScratch();
+    if (typeof showImage === "function") {
+        showImage(current);
     }
 
+    console.log("❤️ Birthday Surprise Loaded Successfully ❤️");
+
 });
-
-// =====================================
-// END
-// =====================================
-
-console.log("❤️ Birthday Surprise Loaded Successfully");
