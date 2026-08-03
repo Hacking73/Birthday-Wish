@@ -8,6 +8,7 @@ const sections = document.querySelectorAll("section");
 
 // ---------- Show Page ----------
 function showPage(index) {
+
     sections.forEach((section, i) => {
         section.classList.toggle("hidden", i !== index);
     });
@@ -16,26 +17,33 @@ function showPage(index) {
         top: 0,
         behavior: "smooth"
     });
+
 }
 
-// Show Home Page
+// Home Page
 showPage(0);
 
 // =====================================
-// NAVIGATION
+// NAVIGATION (6 Pages)
 // =====================================
 
 document.getElementById("openBtn")?.addEventListener("click", () => showPage(1));
+
 document.getElementById("next1")?.addEventListener("click", () => showPage(2));
+
 document.getElementById("next2")?.addEventListener("click", () => showPage(3));
+
 document.getElementById("next3")?.addEventListener("click", () => showPage(4));
-document.getElementById("next4")?.addEventListener("click", () => showPage(5));
-document.getElementById("next5")?.addEventListener("click", () => {
-    showPage(6);
+
+// Letter + Scratch → Final
+document.getElementById("next4")?.addEventListener("click", () => {
+
+    showPage(5);
 
     if (typeof confetti === "function") {
         confetti();
     }
+
 });
 
 // =====================================
@@ -52,20 +60,16 @@ if (song && playBtn) {
         if (song.paused) {
 
             song.play().catch(() => {});
-            playBtn.textContent = "⏸ Pause Music";
+            playBtn.innerHTML = "⏸ Pause Music";
 
         } else {
 
             song.pause();
-            playBtn.textContent = "▶ Play Music";
+            playBtn.innerHTML = "▶ Play Music";
 
         }
 
     });
-
-    document.addEventListener("click", () => {
-        song.play().catch(() => {});
-    }, { once: true });
 
 }
 
@@ -96,9 +100,9 @@ function showImage(index) {
         sliderImage.style.opacity = "1";
 
     }, 200);
+
 }
 
-// Next Image
 document.getElementById("next")?.addEventListener("click", () => {
 
     current++;
@@ -109,7 +113,6 @@ document.getElementById("next")?.addEventListener("click", () => {
 
 });
 
-// Previous Image
 document.getElementById("prev")?.addEventListener("click", () => {
 
     current--;
@@ -120,7 +123,6 @@ document.getElementById("prev")?.addEventListener("click", () => {
 
 });
 
-// Auto Slider
 setInterval(() => {
 
     current++;
@@ -131,16 +133,17 @@ setInterval(() => {
 
 }, 4000);
 
-// First Image
 window.addEventListener("load", () => {
+
     showImage(current);
+
 });
 // =====================================
 // SCRIPT.JS - PART 2
 // Spin Wheel + Scratch Card
 // =====================================
 
-// ---------- Spin Wheel ----------
+// ---------- SPIN WHEEL ----------
 
 const canvas = document.getElementById("wheelCanvas");
 
@@ -203,20 +206,19 @@ if (canvas) {
 
             ctx.restore();
         }
-
     }
 
     drawWheel();
 
-    document.getElementById("spin")?.addEventListener("click", () => {
+    const spinBtn = document.getElementById("spin");
+
+    spinBtn?.addEventListener("click", () => {
 
         const random = Math.floor(Math.random() * reasons.length);
 
         rotation += 1800 + random * 60;
 
         canvas.style.transform = `rotate(${rotation}deg)`;
-
-        const spinBtn = document.getElementById("spin");
 
         spinBtn.disabled = true;
 
@@ -242,77 +244,115 @@ if (canvas) {
 // =====================================
 
 const scratch = document.getElementById("scratchCanvas");
-const sctx = scratch.getContext("2d");
 
-function resetScratch(){
+if (scratch) {
 
-    sctx.globalCompositeOperation = "source-over";
+    const sctx = scratch.getContext("2d");
 
-    sctx.fillStyle = "#b784ff";
-    sctx.fillRect(0,0,scratch.width,scratch.height);
+    scratch.width = 320;
+    scratch.height = 180;
 
-    sctx.fillStyle = "#ffffff";
-    sctx.font = "bold 24px Poppins";
-    sctx.textAlign = "center";
-    sctx.textBaseline = "middle";
+    function resetScratch() {
 
-    sctx.fillText(
-        "Scratch Here ❤️",
-        scratch.width/2,
-        scratch.height/2
-    );
+        sctx.globalCompositeOperation = "source-over";
+
+        sctx.fillStyle = "#B784FF";
+        sctx.fillRect(0, 0, scratch.width, scratch.height);
+
+        sctx.fillStyle = "#FFFFFF";
+        sctx.font = "bold 24px Poppins";
+        sctx.textAlign = "center";
+        sctx.textBaseline = "middle";
+
+        sctx.fillText(
+            "Scratch Here ❤️",
+            scratch.width / 2,
+            scratch.height / 2
+        );
+    }
+
+    resetScratch();
+
+    let scratching = false;
+
+    function scratchMove(x, y) {
+
+        sctx.globalCompositeOperation = "destination-out";
+
+        sctx.beginPath();
+        sctx.arc(x, y, 20, 0, Math.PI * 2);
+        sctx.fill();
+    }
+
+    // Mouse
+    scratch.addEventListener("mousedown", () => scratching = true);
+    scratch.addEventListener("mouseup", () => scratching = false);
+    scratch.addEventListener("mouseleave", () => scratching = false);
+
+    scratch.addEventListener("mousemove", (e) => {
+
+        if (!scratching) return;
+
+        const rect = scratch.getBoundingClientRect();
+
+        scratchMove(
+            e.clientX - rect.left,
+            e.clientY - rect.top
+        );
+
+    });
+
+    // Touch
+    scratch.addEventListener("touchstart", () => scratching = true);
+    scratch.addEventListener("touchend", () => scratching = false);
+
+    scratch.addEventListener("touchmove", (e) => {
+
+        if (!scratching) return;
+
+        e.preventDefault();
+
+        const rect = scratch.getBoundingClientRect();
+
+        scratchMove(
+            e.touches[0].clientX - rect.left,
+            e.touches[0].clientY - rect.top
+        );
+
+    }, { passive: false });
 
 }
+// =====================================
+// SCRIPT.JS - PART 3
+// Hearts + Confetti + Effects
+// =====================================
 
-resetScratch();
+// ---------- Floating Hearts ----------
 
-let scratching = false;
+const heartsContainer = document.getElementById("hearts");
 
-function scratchMove(x,y){
+if (heartsContainer) {
 
-    sctx.globalCompositeOperation="destination-out";
+    setInterval(() => {
 
-    sctx.beginPath();
-    sctx.arc(x,y,20,0,Math.PI*2);
-    sctx.fill();
+        const heart = document.createElement("div");
+
+        heart.className = "heart";
+        heart.innerHTML = "💜";
+
+        heart.style.left = Math.random() * 100 + "%";
+        heart.style.fontSize = (20 + Math.random() * 20) + "px";
+        heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+
+        heartsContainer.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 8000);
+
+    }, 600);
 
 }
-
-scratch.addEventListener("mousedown",()=>scratching=true);
-scratch.addEventListener("mouseup",()=>scratching=false);
-scratch.addEventListener("mouseleave",()=>scratching=false);
-
-scratch.addEventListener("mousemove",(e)=>{
-
-    if(!scratching) return;
-
-    const rect=scratch.getBoundingClientRect();
-
-    scratchMove(
-        e.clientX-rect.left,
-        e.clientY-rect.top
-    );
-
-});
-
-scratch.addEventListener("touchstart",()=>scratching=true);
-
-scratch.addEventListener("touchend",()=>scratching=false);
-
-scratch.addEventListener("touchmove",(e)=>{
-
-    if(!scratching) return;
-
-    e.preventDefault();
-
-    const rect=scratch.getBoundingClientRect();
-
-    scratchMove(
-        e.touches[0].clientX-rect.left,
-        e.touches[0].clientY-rect.top
-    );
-
-},{passive:false});
 
 // =====================================
 // BUTTON CLICK EFFECT
@@ -354,7 +394,6 @@ function confetti() {
         piece.className = "confetti";
 
         piece.style.left = Math.random() * 100 + "vw";
-        piece.style.top = "-20px";
         piece.style.background =
             colors[Math.floor(Math.random() * colors.length)];
 
@@ -377,17 +416,14 @@ function confetti() {
 
 document.addEventListener("keydown", (e) => {
 
-    if (sections.length < 3) return;
-
+    // Gallery page visible?
     if (sections[2].classList.contains("hidden")) return;
 
     if (e.key === "ArrowRight") {
 
         current++;
 
-        if (current >= images.length) {
-            current = 0;
-        }
+        if (current >= images.length) current = 0;
 
         showImage(current);
 
@@ -397,9 +433,7 @@ document.addEventListener("keydown", (e) => {
 
         current--;
 
-        if (current < 0) {
-            current = images.length - 1;
-        }
+        if (current < 0) current = images.length - 1;
 
         showImage(current);
 
@@ -417,6 +451,10 @@ window.addEventListener("load", () => {
         showImage(current);
     }
 
-    console.log("❤️ Girlfriend's Day Surprise Loaded Successfully ❤️");
+    console.log("❤️ Happy Girlfriend's Day Surprise Loaded Successfully ❤️");
 
 });
+
+// =====================================
+// END OF SCRIPT
+// =====================================
