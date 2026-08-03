@@ -513,33 +513,45 @@ button:active{
     box-shadow:0 15px 35px rgba(0,0,0,.18);
 }
 
+.scratch-box{
+    position:relative;
+    width:320px;
+    height:140px;
+    margin:30px auto;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 15px 35px rgba(0,0,0,.18);
+}
+
 .secret{
     position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
+    inset:0;
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
-    flex-direction:column;
     background:#ffffff;
-    border-radius:20px;
-    font-family:'Dancing Script',cursive;
-    font-size:30px;
-    color:#8b5cf6;
-    text-align:center;
     z-index:1;
+}
+
+.secret h3{
+    color:#ff4da6;
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.secret p{
+    font-size:20px;
+    color:#6b4ba5;
+    margin:0;
 }
 
 #scratchCanvas{
     position:absolute;
-    top:0;
-    left:0;
+    inset:0;
     width:100%;
     height:100%;
     z-index:2;
-    border-radius:20px;
     cursor:pointer;
     touch-action:none;
 }
