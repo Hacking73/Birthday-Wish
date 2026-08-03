@@ -96,11 +96,10 @@ window.addEventListener("click", () => {
 const slider = document.getElementById("sliderImage");
 
 const images = [
-
-<img id="sliderImage" src="images/photo1.jpg" alt="Photo">
-  <img id="sliderImage" src="images/photo2.jpg" alt="Photo">
-<img id="sliderImage" src="images/photo3.jpg" alt="Photo">
-  <img id="sliderImage" src="images/photo4.jpg" alt="Photo">
+    "images/photo1.jpg",
+    "images/photo2.jpg",
+    "images/photo3.jpg",
+    "images/photo4.jpg"
 ];
 
 let current = 0;
