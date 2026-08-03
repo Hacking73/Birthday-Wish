@@ -498,3 +498,89 @@ font-size:42px;
 }
 
 }
+/* ===== Premium Glass Effect ===== */
+
+.music-card,
+.card,
+.letter,
+.secret{
+    background:rgba(255,255,255,.25);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.4);
+}
+
+/* ===== Premium Buttons ===== */
+
+button{
+    background:linear-gradient(135deg,#ff4da6,#8b5cf6);
+    box-shadow:0 15px 35px rgba(139,92,246,.35);
+    transition:.35s;
+}
+
+button:hover{
+    transform:translateY(-5px) scale(1.05);
+    box-shadow:0 25px 50px rgba(139,92,246,.45);
+}
+
+/* ===== Gallery ===== */
+
+.slider img{
+    border:8px solid #fff;
+    box-shadow:0 20px 60px rgba(0,0,0,.18);
+}
+
+.slider img:hover{
+    transform:scale(1.05);
+}
+
+/* ===== Spin Wheel ===== */
+
+#wheelCanvas{
+    border:12px solid #fff;
+    background:#fff;
+    box-shadow:
+        0 0 0 8px #ffb6e6,
+        0 25px 50px rgba(0,0,0,.18);
+}
+
+/* ===== Letter ===== */
+
+.card{
+    border-radius:30px;
+}
+
+.card h2{
+    color:#ff4da6;
+}
+
+.card p{
+    color:#555;
+}
+
+/* ===== Scratch Card ===== */
+
+#scratchCanvas{
+    box-shadow:0 20px 40px rgba(0,0,0,.18);
+}
+
+/* ===== Final Page ===== */
+
+.flowers{
+    filter:drop-shadow(0 0 20px #ff4da6);
+}
+
+/* ===== Scrollbar ===== */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#b965ff;
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-track{
+    background:#f4edff;
+}
