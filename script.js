@@ -352,3 +352,152 @@ scratch.addEventListener("touchmove", (e) => {
 }, {
     passive: false
 });
+// =====================================
+// SCRIPT.JS - PART 3
+// FLOATING HEARTS + CONFETTI
+// BUTTON EFFECTS + KEYBOARD
+// =====================================
+
+// ---------- Floating Hearts ----------
+
+const heartsContainer = document.getElementById("hearts");
+
+setInterval(() => {
+
+    const heart = document.createElement("div");
+
+    heart.className = "heart";
+    heart.innerHTML = "💜";
+
+    heart.style.left = Math.random() * 100 + "%";
+    heart.style.fontSize = (20 + Math.random() * 20) + "px";
+    heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+
+    heartsContainer.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 8000);
+
+}, 600);
+
+// =====================================
+// BUTTON EFFECT
+// =====================================
+
+document.querySelectorAll("button").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        button.style.transform = "scale(.95)";
+
+        setTimeout(() => {
+
+            button.style.transform = "";
+
+        }, 150);
+
+    });
+
+});
+
+// =====================================
+// CONFETTI
+// =====================================
+
+function confetti() {
+
+    const colors = [
+        "#ff4d6d",
+        "#ffb703",
+        "#06d6a0",
+        "#8ecae6",
+        "#b5179e",
+        "#7b2cbf"
+    ];
+
+    for (let i = 0; i < 120; i++) {
+
+        const piece = document.createElement("div");
+
+        piece.className = "confetti";
+
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+
+        piece.style.animationDuration =
+            (3 + Math.random() * 2) + "s";
+
+        document.body.appendChild(piece);
+
+        setTimeout(() => {
+            piece.remove();
+        }, 5000);
+
+    }
+
+}
+
+// =====================================
+// KEYBOARD GALLERY SUPPORT
+// =====================================
+
+document.addEventListener("keydown", (e) => {
+
+    // Gallery page visible?
+    if (sections[2].classList.contains("hidden")) return;
+
+    if (e.key === "ArrowRight") {
+
+        current++;
+
+        if (current >= images.length) current = 0;
+
+        showImage(current);
+
+    }
+
+    if (e.key === "ArrowLeft") {
+
+        current--;
+
+        if (current < 0) current = images.length - 1;
+
+        showImage(current);
+
+    }
+
+});
+
+// =====================================
+// RESET SCRATCH WHEN OPENING PAGE
+// =====================================
+
+document.getElementById("next4").addEventListener("click", () => {
+
+    if (typeof resetScratch === "function") {
+        resetScratch();
+    }
+
+});
+
+// =====================================
+// PAGE LOAD
+// =====================================
+
+window.addEventListener("load", () => {
+
+    showImage(current);
+
+    if (typeof resetScratch === "function") {
+        resetScratch();
+    }
+
+});
+
+// =====================================
+// END
+// =====================================
+
+console.log("❤️ Birthday Surprise Loaded Successfully");
