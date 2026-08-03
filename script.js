@@ -1,100 +1,121 @@
-// ---------- Pages ----------
+// ===============================
+// PAGES
+// ===============================
+
 const sections = document.querySelectorAll("section");
 
-function showPage(index){
-    sections.forEach((sec,i)=>{
-        if(i===index){
-            sec.classList.remove("hidden");
-        }else{
-            sec.classList.add("hidden");
-        }
+function showPage(index) {
+    sections.forEach((section, i) => {
+        section.classList.toggle("hidden", i !== index);
     });
 }
 
-// Home page
 showPage(0);
 
-// ---------- Navigation ----------
-document.getElementById("openBtn").onclick=()=>showPage(1);
-document.getElementById("next1").onclick=()=>showPage(2);
+// ===============================
+// BUTTONS
+// ===============================
+
+document.getElementById("openBtn").onclick = () => showPage(1);
+document.getElementById("next1").onclick = () => showPage(2);
+
 document.getElementById("next2").onclick = () => {
     showPage(3);
 
-    // Wheel redraw after page opens
     setTimeout(() => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawWheel();
     }, 100);
 };
-document.getElementById("next3").onclick=()=>showPage(4);
-document.getElementById("next4").onclick=()=>showPage(5);
-document.getElementById("next5").onclick = function () {
+
+document.getElementById("next3").onclick = () => showPage(4);
+document.getElementById("next4").onclick = () => showPage(5);
+
+document.getElementById("next5").onclick = () => {
     showPage(6);
     confetti();
 };
-// ---------- Music ----------
-const song=document.getElementById("song");
-const playBtn=document.getElementById("playMusic");
 
-playBtn.onclick=function(){
+// ===============================
+// MUSIC PLAYER
+// ===============================
 
-if(song.paused){
+const song = document.getElementById("song");
+const playBtn = document.getElementById("playMusic");
 
-song.play();
+playBtn.addEventListener("click", () => {
 
-playBtn.innerHTML="⏸ Pause";
+    if (song.paused) {
 
-}else{
+        song.play();
 
-song.pause();
+        playBtn.innerHTML = "⏸ Pause";
 
-playBtn.innerHTML="▶ Play";
+    } else {
 
-}
+        song.pause();
 
-// ---------- Gallery ----------
-const images=[
+        playBtn.innerHTML = "▶ Play";
 
-"images/photo1.jpg",
+    }
 
-"images/photo2.jpg",
+});
 
-"images/photo3.jpg",
+// ===============================
+// GALLERY
+// ===============================
 
-"images/photo4.jpg"
-
+const images = [
+    "images/photo1.jpg",
+    "images/photo2.jpg",
+    "images/photo3.jpg",
+    "images/photo4.jpg"
 ];
 
-let rotation = 0;
+let current = 0;
 
-document.getElementById("spin").onclick = function(){
+const slider = document.getElementById("sliderImage");
 
-    const random = Math.floor(Math.random()*reasons.length);
+document.getElementById("next").onclick = () => {
 
-    rotation += 360*5 + random*60;
+    current++;
 
-    canvas.style.transition = "transform 5s cubic-bezier(.17,.67,.2,1)";
-    canvas.style.transform = `rotate(${rotation}deg)`;
+    if (current >= images.length)
+        current = 0;
 
-    document.getElementById("spin").disabled = true;
+    slider.src = images[current];
 
-    setTimeout(()=>{
+};
 
-        document.getElementById("result").innerHTML =
-        "❤️ " + reasons[random];
+document.getElementById("prev").onclick = () => {
 
-        document.getElementById("spin").disabled = false;
+    current--;
 
-        confetti();
+    if (current < 0)
+        current = images.length - 1;
 
-    },5000);
+    slider.src = images[current];
 
-}
-// ---------- Spin Wheel ----------
+};
 
-const canvas=document.getElementById("wheelCanvas");
+// Auto Gallery
 
-const ctx=canvas.getContext("2d");
+setInterval(() => {
+
+    current++;
+
+    if (current >= images.length)
+        current = 0;
+
+    slider.src = images[current];
+
+}, 4000);
+// ===============================
+// PREMIUM SPIN WHEEL
+// ===============================
+
+const canvas = document.getElementById("wheelCanvas");
+const ctx = canvas.getContext("2d");
 
 const reasons = [
     "Your Smile 😊",
@@ -105,261 +126,170 @@ const reasons = [
     "My Everything 👑"
 ];
 
-const colors=[
-
-"#f8b4ff",
-
-"#d5b8ff"
-
+const colors = [
+    "#ffb3d9",
+    "#d9b3ff",
+    "#b3e5ff",
+    "#ffe0b3",
+    "#c8f7c5",
+    "#f7c5ff"
 ];
 
-function drawWheel(){
+function drawWheel() {
 
-let angle=(Math.PI*2)/reasons.length;
+    const angle = (Math.PI * 2) / reasons.length;
 
-for(let i=0;i<reasons.length;i++){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-ctx.beginPath();
+    for (let i = 0; i < reasons.length; i++) {
 
-ctx.moveTo(160,160);
+        ctx.beginPath();
+        ctx.moveTo(160, 160);
 
-ctx.arc(160,160,150,
+        ctx.arc(
+            160,
+            160,
+            150,
+            angle * i,
+            angle * (i + 1)
+        );
 
-angle*i,
+        ctx.fillStyle = colors[i];
+        ctx.fill();
 
-angle*(i+1));
+        ctx.save();
 
-ctx.fillStyle=colors[i%2];
+        ctx.translate(160, 160);
+        ctx.rotate(angle * i + angle / 2);
 
-ctx.fill();
+        ctx.fillStyle = "#333";
+        ctx.font = "bold 14px Poppins";
+        ctx.textAlign = "center";
 
-ctx.save();
+        ctx.fillText(reasons[i], 90, 5);
 
-ctx.translate(160,160);
+        ctx.restore();
+    }
 
-ctx.rotate(angle*i+angle/2);
+    // Center Circle
+    ctx.beginPath();
+    ctx.arc(160,160,28,0,Math.PI*2);
+    ctx.fillStyle="#ffffff";
+    ctx.fill();
 
-ctx.fillStyle="#333";
-
-ctx.font="16px Poppins";
-
-ctx.fillText(reasons[i],60,0);
-
-ctx.restore();
-
+    ctx.beginPath();
+    ctx.arc(160,160,8,0,Math.PI*2);
+    ctx.fillStyle="#ff4da6";
+    ctx.fill();
 }
 
 drawWheel();
 
 let rotation = 0;
+let spinning = false;
 
 document.getElementById("spin").onclick = function () {
 
+    if(spinning) return;
+
+    spinning = true;
+
     const random = Math.floor(Math.random() * reasons.length);
 
-    rotation += 1800 + (random * 60);
+    rotation += 360 * 5 + random * 60;
 
-    canvas.style.transform = "rotate(" + rotation + "deg)";
+    canvas.style.transition =
+    "transform 5s cubic-bezier(.17,.67,.25,1)";
+
+    canvas.style.transform =
+    `rotate(${rotation}deg)`;
 
     setTimeout(() => {
 
         document.getElementById("result").innerHTML =
-            "❤️ " + reasons[random];
+        "❤️ " + reasons[random];
 
         confetti();
 
-    }, 5000);
+        spinning = false;
 
-}
+    },5000);
 
-// ---------- Scratch Card ----------
-
-const scratch=document.getElementById("scratchCanvas");
-
-const sctx=scratch.getContext("2d");
-
-scratch.width=320;
-
-scratch.height=140;
-
-sctx.fillStyle="#b784ff";
-
-sctx.fillRect(0,0,320,140);
-
-sctx.fillStyle="#fff";
-
-sctx.font="25px Poppins";
-
-sctx.fillText("Scratch Here ❤️",60,75);
-
-let isDown=false;
-
-scratch.addEventListener("mousedown",()=>{
-
-isDown=true;
-
-});
-
-scratch.addEventListener("mouseup",()=>{
-
-isDown=false;
-
-});
-
-scratch.addEventListener("mousemove",function(e){
-
-if(!isDown)return;
-
-const rect=scratch.getBoundingClientRect();
-
-const x=e.clientX-rect.left;
-
-const y=e.clientY-rect.top;
-
-sctx.globalCompositeOperation="destination-out";
-
-sctx.beginPath();
-
-sctx.arc(x,y,18,0,Math.PI*2);
-
-sctx.fill();
-
-});
-
-// Mobile Touch
-
-scratch.addEventListener("touchmove",function(e){
-
-const rect=scratch.getBoundingClientRect();
-
-const x=e.touches[0].clientX-rect.left;
-
-const y=e.touches[0].clientY-rect.top;
-
-sctx.globalCompositeOperation="destination-out";
-
-sctx.beginPath();
-
-sctx.arc(x,y,20,0,Math.PI*2);
-
-sctx.fill();
-
-});
-
+};
 // ---------- Auto Slider ----------
+setInterval(() => {
+    current++;
+    if (current >= images.length) current = 0;
+    slider.src = images[current];
+}, 4000);
 
-setInterval(function(){
+// ---------- Floating Hearts ----------
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💜";
+    heart.style.left = Math.random() * 100 + "%";
+    heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+    heart.style.fontSize = (20 + Math.random() * 25) + "px";
 
-current++;
+    document.getElementById("hearts").appendChild(heart);
 
-if(current>=images.length){
+    setTimeout(() => {
+        heart.remove();
+    }, 8000);
 
-current=0;
+}, 500);
 
-}
+// ---------- Auto Play Music ----------
+window.addEventListener("click", () => {
+    song.play().catch(() => {});
+}, { once: true });
 
-slider.src=images[current];
+// ---------- Button Click Effect ----------
+document.querySelectorAll("button").forEach(btn => {
 
-},4000);
-// Floating Hearts
+    btn.addEventListener("click", () => {
 
-setInterval(function(){
+        btn.style.transform = "scale(.92)";
 
-const heart=document.createElement("div");
+        setTimeout(() => {
+            btn.style.transform = "scale(1)";
+        }, 150);
 
-heart.className="heart";
-
-heart.innerHTML="💜";
-
-heart.style.left=Math.random()*100+"%";
-
-heart.style.animationDuration=
-
-(4+Math.random()*4)+"s";
-
-heart.style.fontSize=
-
-20+Math.random()*25+"px";
-
-document.getElementById("hearts").appendChild(heart);
-
-setTimeout(()=>{
-
-heart.remove();
-
-},8000);
-
-},500);
-
-
-// Auto Play Music
-
-window.addEventListener("click",()=>{
-
-song.play().catch(()=>{});
-
-},{once:true});
-
-
-// Smooth Scroll Top
-
-window.scrollTo({
-
-top:0,
-
-behavior:"smooth"
+    });
 
 });
 
+// ---------- Confetti ----------
+function confetti() {
 
-// Button Click Effect
+    const colors = [
+        "#ff4d6d",
+        "#ffb703",
+        "#06d6a0",
+        "#8ecae6",
+        "#b5179e",
+        "#7b2cbf"
+    ];
 
-document.querySelectorAll("button")
+    for (let i = 0; i < 120; i++) {
 
-.forEach(btn=>{
+        const c = document.createElement("div");
 
-btn.addEventListener("click",()=>{
+        c.className = "confetti";
 
-btn.style.transform="scale(.92)";
+        c.style.left = Math.random() * 100 + "vw";
 
-setTimeout(()=>{
+        c.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
 
-btn.style.transform="scale(1)";
+        c.style.animationDuration =
+            (3 + Math.random() * 2) + "s";
 
-},150);
+        document.body.appendChild(c);
 
-});
-
-});
-function confetti(){
-
-const colors=[
-"#ff4d6d",
-"#ffb703",
-"#06d6a0",
-"#8ecae6",
-"#b5179e",
-"#7b2cbf"
-];
-
-for(let i=0;i<120;i++){
-
-const c=document.createElement("div");
-
-c.className="confetti";
-
-c.style.left=Math.random()*100+"vw";
-
-c.style.background=
-colors[Math.floor(Math.random()*colors.length)];
-
-c.style.animationDuration=
-(3+Math.random()*2)+"s";
-
-document.body.appendChild(c);
-
-setTimeout(()=>{
-c.remove();
-},5000);
-
+        setTimeout(() => {
+            c.remove();
+        }, 5000);
+    }
 }
