@@ -2,233 +2,236 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Happy Girlfriend's Day ❤️</title>
+<title>Happy Girlfriend's Day ❤️</title>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 
-    <!-- Floating Hearts -->
-    <div id="hearts"></div>
+<div id="hearts"></div>
 
-    <!-- Background -->
-    <div class="background"></div>
+<div class="background"></div>
 
-    <!-- HOME PAGE -->
-    <section class="home">
+<!-- HOME PAGE -->
 
-        <div class="top-tag">
-            ❤️ HAPPY GIRLFRIEND'S DAY ❤️
-        </div>
+<section class="home">
 
-        <h1>
-            Hi, Santosh ❤️
-        </h1>
+<div class="top-tag">
+❤️ HAPPY GIRLFRIEND'S DAY ❤️
+</div>
+
+<h1>Hi, Santosh ❤️</h1>
+
+<p>
+I made this little surprise just for you.
+Every page is filled with love,
+memories and happiness.
+</p>
+
+<div class="letter">
+<img src="icons/heart.png" alt="Heart">
+</div>
+
+<button id="openBtn">
+OPEN MY SURPRISE ❤️
+</button>
+
+</section>
+
+<!-- MUSIC PAGE -->
+
+<section class="music-page hidden">
+
+<h2>🎵 Our Favourite Song</h2>
+
+<p>
+Every time I hear this song,
+it reminds me of you.
+</p>
+
+<div class="music-card">
+
+<h3>Perfect ❤️</h3>
+
+<p>Our Special Song</p>
+
+<button id="playMusic">
+▶ Play Music
+</button>
+
+</div>
+
+<audio id="song" loop>
+<source src="music/song.mp3" type="audio/mpeg">
+</audio>
+
+<button id="next1">
+Next ➜
+</button>
+
+</section>
+
+<!-- GALLERY PAGE -->
+
+<section class="gallery hidden">
+
+<h2>
+Every Picture,
+Every Memory ❤️
+</h2>
+
+<div class="slider">
+
+<img
+id="sliderImage"
+src="images/photo1.jpg"
+alt="Photo">
+
+</div>
+
+<button id="prev">◀</button>
+
+<button id="next">▶</button>
+
+<br><br>
+
+<button id="next2">
+Next ➜
+</button>
+
+</section>
+<!-- SPIN WHEEL PAGE -->
+
+<section class="wheel hidden">
+
+    <h2>
+        Pick a reason,
+        any reason ❤️
+    </h2>
+
+    <div class="wheel-box">
+
+        <div id="pointer"></div>
+
+        <canvas
+            id="wheelCanvas"
+            width="320"
+            height="320">
+        </canvas>
+
+    </div>
+
+    <button id="spin">
+        🎡 SPIN THE WHEEL
+    </button>
+
+    <p id="result"></p>
+
+    <button id="next3">
+        Next ➜
+    </button>
+
+</section>
+
+<!-- LOVE LETTER PAGE -->
+
+<section class="letter-page hidden">
+
+    <div class="card">
+
+        <h2>💌 A Letter For You</h2>
 
         <p>
-            I made this little surprise just for you.
-            Every page is filled with love,
-            memories and happiness.
+
+            Dear Santosh ❤️,
+
+            Every moment with you becomes a beautiful memory.
+
+            Thank you for always making my life brighter.
+
+            Your smile is my favourite.
+
+            Your happiness means everything to me.
+
+            No matter what happens,
+            I'll always choose you.
+
+            ❤️ Forever Yours ❤️
+
         </p>
 
-        <div class="letter">
-            <img src="icons/heart.png" alt="Heart">
-        </div>
+    </div>
 
-        <button id="openBtn">
-            OPEN MY SURPRISE ❤️
-        </button>
+    <button id="next4">
+        Next ➜
+    </button>
 
-    </section>
+</section>
+<!-- SCRATCH CARD PAGE -->
 
-    <!-- MUSIC PAGE -->
+<section class="scratch hidden">
 
-    <section class="music-page hidden">
+    <h2>Scratch This ❤️</h2>
 
-        <h2>🎵 Our Favourite Song</h2>
+    <div class="secret">
+        I Love You ❤️<br>
+        Always Yours,<br>
+        Santosh 💖
+    </div>
 
-        <p>
-            Every time I hear this song,
-            it reminds me of you.
-        </p>
+    <canvas
+        id="scratchCanvas"
+        width="320"
+        height="140">
+    </canvas>
 
-        <div class="music-card">
+    <br>
 
-            <h3>Perfect ❤️</h3>
+    <button id="next5">
+        Next ➜
+    </button>
 
-            <p>Our Special Song</p>
+</section>
 
-            <button id="playMusic">
-                ▶ Play Music
-            </button>
+<!-- FINAL PAGE -->
 
-        </div>
+<section class="last hidden">
 
-        <audio id="song" loop>
-            <source src="music/song.mp3" type="audio/mpeg">
-        </audio>
+    <h1>Thank You ❤️</h1>
 
-        <button id="next1">
-            Next ➜
-        </button>
+    <p>
+        Thank you for being part of my life.<br><br>
 
-    </section>
-
-    <!-- GALLERY PAGE -->
-
-    <section class="gallery hidden">
-
-        <h2>
-            Every Picture,
-            Every Memory ❤️
-        </h2>
-
-        <div class="slider">
-
-            <img id="sliderImage"
-                src="images/photo1.jpg"
-                alt="Photo">
-
-        </div>
-
-        <button id="prev">◀</button>
-
-        <button id="next">▶</button>
+        I hope this little surprise
+        made you smile forever. 💕
 
         <br><br>
 
-        <button id="next2">
-            Next ➜
-        </button>
+        Happy Girlfriend's Day ❤️
+    </p>
 
-    </section>
-        <!-- SPIN WHEEL PAGE -->
+    <div class="flowers">
+        🌹 🌸 🌷 💐 🌹
+    </div>
 
-    <section class="wheel hidden">
+    <h2>
+        Yours Forever,<br>
+        <span style="color:#ff4da6;">
+            Santosh ❤️
+        </span>
+    </h2>
 
-        <h2>
-            Pick a reason,
-            any reason ❤️
-        </h2>
+</section>
 
-        <div class="wheel-box">
-
-            <div id="pointer">▼</div>
-
-            <canvas id="wheelCanvas"
-                width="320"
-                height="320">
-            </canvas>
-
-        </div>
-
-        <br>
-
-        <button id="spin">
-            SPIN IT 🌸
-        </button>
-
-        <p id="result"></p>
-
-        <br>
-
-        <button id="next3">
-            Next ➜
-        </button>
-
-    </section>
-
-    <!-- LOVE LETTER -->
-
-    <section class="letter-page hidden">
-
-        <div class="card">
-
-            <h2>
-                A Letter For You ❤️
-            </h2>
-
-            <p>
-                Dear Santosh,
-
-                Every moment with you becomes a beautiful memory.
-                Thank you for always making my life brighter.
-
-                Your smile is my favourite,
-                your happiness means everything to me.
-
-                No matter what happens,
-                I'll always choose you.
-
-                ❤️ Forever Yours ❤️
-            </p>
-
-        </div>
-
-        <button id="next4">
-            Next ➜
-        </button>
-
-    </section>
-
-    <!-- SCRATCH CARD -->
-
-    <section class="scratch hidden">
-
-        <h2>
-            Scratch This ❤️
-        </h2>
-
-        <div class="secret">
-            I Love You ❤️<br>
-            Always Santosh
-        </div>
-
-        <canvas id="scratchCanvas"></canvas>
-
-        <br>
-
-        <button id="next5">
-            Next ➜
-        </button>
-
-    </section>
-
-    <!-- FINAL PAGE -->
-
-    <section class="last hidden">
-
-        <h1>
-            Thank You ❤️
-        </h1>
-
-        <p>
-            Thank you for being part of my life.
-
-            I hope this little surprise made you smile.
-
-            Happy Girlfriend's Day ❤️
-        </p>
-
-        <div class="flowers">
-            🌹🌷🌹🌷🌹
-        </div>
-
-        <h2>
-            Yours Forever,<br>
-            <span style="color:#ff4da6;">Santosh ❤️</span>
-        </h2>
-
-    </section>
-
-
-    <script src="script.js"></script>
+<!-- JavaScript -->
+<script src="script.js"></script>
 
 </body>
 </html>
