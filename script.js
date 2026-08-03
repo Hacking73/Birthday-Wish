@@ -1,54 +1,143 @@
+// =====================================
+// BIRTHDAY SURPRISE
+// SCRIPT.JS - PART 1
+// Navigation + Music + Gallery
+// =====================================
+
+// ---------- Pages ----------
 const sections = document.querySelectorAll("section");
 
 function showPage(index) {
-    sections.forEach((sec, i) => {
-        sec.classList.toggle("hidden", i !== index);
+    sections.forEach((section, i) => {
+        section.classList.toggle("hidden", i !== index);
+    });
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
     });
 }
 
+// Start Home Page
 showPage(0);
 
-document.getElementById("openBtn").addEventListener("click", () => {
-    alert("Working");
-    showPage(1);
-});
-const scratch = document.getElementById("scratchCanvas");
-const sctx = scratch.getContext("2d");
+// ---------- Navigation ----------
+document.getElementById("openBtn").onclick = () => showPage(1);
+document.getElementById("next1").onclick = () => showPage(2);
+document.getElementById("next2").onclick = () => showPage(3);
+document.getElementById("next3").onclick = () => showPage(4);
+document.getElementById("next4").onclick = () => showPage(5);
+document.getElementById("next5").onclick = () => {
+    showPage(6);
 
-function resetScratch() {
+    if (typeof confetti === "function") {
+        confetti();
+    }
+};
 
-    sctx.globalCompositeOperation = "source-over";
+// =====================================
+// MUSIC
+// =====================================
 
-    sctx.fillStyle = "#b784ff";
-    sctx.fillRect(0,0,scratch.width,scratch.height);
+const song = document.getElementById("song");
+const playBtn = document.getElementById("playMusic");
 
-    sctx.fillStyle = "#fff";
-    sctx.font = "24px Poppins";
-    sctx.textAlign = "center";
-    sctx.fillText("Scratch Here ❤️",160,75);
+playBtn.onclick = () => {
+
+    if (song.paused) {
+
+        song.play();
+
+        playBtn.innerHTML = "⏸ Pause Music";
+
+    } else {
+
+        song.pause();
+
+        playBtn.innerHTML = "▶ Play Music";
+
+    }
+
+};
+
+// Auto play after first click
+window.addEventListener("click", () => {
+
+    song.play().catch(() => {});
+
+}, { once: true });
+
+// =====================================
+// PHOTO GALLERY
+// =====================================
+
+const slider = document.getElementById("sliderImage");
+
+const images = [
+    "images/photo1.jpg",
+    "images/photo2.jpg",
+    "images/photo3.jpg",
+    "images/photo4.jpg"
+];
+
+let current = 0;
+
+function showImage(index) {
+
+    slider.style.opacity = "0";
+
+    setTimeout(() => {
+
+        slider.src = images[index];
+
+        slider.style.opacity = "1";
+
+    }, 200);
 
 }
 
-resetScratch();
+// Next Button
+document.getElementById("next").onclick = () => {
 
-let drawing = false;
+    current++;
 
-scratch.addEventListener("mousedown",()=>drawing=true);
-scratch.addEventListener("mouseup",()=>drawing=false);
-scratch.addEventListener("mouseleave",()=>drawing=false);
+    if (current >= images.length) {
+        current = 0;
+    }
 
-scratch.addEventListener("mousemove",(e)=>{
+    showImage(current);
 
-    if(!drawing) return;
+};
 
-    const rect = scratch.getBoundingClientRect();
+// Previous Button
+document.getElementById("prev").onclick = () => {
 
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    current--;
 
-    sctx.globalCompositeOperation = "destination-out";
-    sctx.beginPath();
-    sctx.arc(x,y,20,0,Math.PI*2);
-    sctx.fill();
+    if (current < 0) {
+        current = images.length - 1;
+    }
 
-});
+    showImage(current);
+
+};
+
+// Auto Slider
+setInterval(() => {
+
+    current++;
+
+    if (current >= images.length) {
+        current = 0;
+    }
+
+    showImage(current);
+
+}, 4000);
+
+// First Image
+window.onload = () => {
+
+    showImage(current);
+
+};
