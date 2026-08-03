@@ -1,80 +1,166 @@
-// ---------- Pages ----------
+// ===============================
+// BIRTHDAY SURPRISE - SCRIPT.JS
+// PART 1
+// ===============================
+
+// ---------- Sections ----------
 const sections = document.querySelectorAll("section");
 
-function showPage(index){
-    sections.forEach((sec,i)=>{
-        sec.classList.toggle("hidden", i !== index);
+function showPage(index) {
+    sections.forEach((section, i) => {
+        if (i === index) {
+            section.classList.remove("hidden");
+        } else {
+            section.classList.add("hidden");
+        }
+    });
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
     });
 }
 
+// Home Page
 showPage(0);
 
 // ---------- Navigation ----------
-document.getElementById("openBtn").onclick = ()=>showPage(1);
-document.getElementById("next1").onclick = ()=>showPage(2);
-document.getElementById("next2").onclick = ()=>{
+document.getElementById("openBtn").addEventListener("click", () => {
+    showPage(1);
+});
+
+document.getElementById("next1").addEventListener("click", () => {
+    showPage(2);
+});
+
+document.getElementById("next2").addEventListener("click", () => {
     showPage(3);
-    setTimeout(drawWheel,100);
-};
-document.getElementById("next3").onclick = ()=>showPage(4);
-document.getElementById("next4").onclick = ()=>showPage(5);
-document.getElementById("next5").onclick = ()=>{
+
+    setTimeout(() => {
+        if (typeof drawWheel === "function") {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawWheel();
+        }
+    }, 100);
+});
+
+document.getElementById("next3").addEventListener("click", () => {
+    showPage(4);
+});
+
+document.getElementById("next4").addEventListener("click", () => {
+    showPage(5);
+});
+
+document.getElementById("next5").addEventListener("click", () => {
     showPage(6);
     confetti();
-};
+});
 
-// ---------- Music ----------
+// ===============================
+// MUSIC
+// ===============================
+
 const song = document.getElementById("song");
 const playBtn = document.getElementById("playMusic");
 
-playBtn.onclick = ()=>{
-    if(song.paused){
+playBtn.addEventListener("click", () => {
+
+    if (song.paused) {
+
         song.play();
-        playBtn.innerHTML="⏸ Pause";
-    }else{
+
+        playBtn.innerHTML = "⏸ Pause Music";
+
+    } else {
+
         song.pause();
-        playBtn.innerHTML="▶ Play";
+
+        playBtn.innerHTML = "▶ Play Music";
+
     }
-};
-// ---------- Gallery ----------
+
+});
+
+// Auto play after first click
+window.addEventListener("click", () => {
+
+    song.play().catch(() => {});
+
+}, { once: true });
+
+// ===============================
+// GALLERY
+// ===============================
+
+const slider = document.getElementById("sliderImage");
+
 const images = [
+
     "images/photo1.jpg",
     "images/photo2.jpg",
     "images/photo3.jpg",
     "images/photo4.jpg"
+
 ];
 
 let current = 0;
 
-const slider = document.getElementById("sliderImage");
+function showImage(index) {
 
-document.getElementById("next").onclick = () => {
+    slider.src = images[index];
+
+}
+
+// Next image
+document.getElementById("next").addEventListener("click", () => {
+
     current++;
-    if(current >= images.length){
-        current = 0;
-    }
-    slider.src = images[current];
-};
 
-document.getElementById("prev").onclick = () => {
-    current--;
-    if(current < 0){
-        current = images.length - 1;
+    if (current >= images.length) {
+
+        current = 0;
+
     }
-    slider.src = images[current];
-};
+
+    showImage(current);
+
+});
+
+// Previous image
+document.getElementById("prev").addEventListener("click", () => {
+
+    current--;
+
+    if (current < 0) {
+
+        current = images.length - 1;
+
+    }
+
+    showImage(current);
+
+});
 
 // Auto Slider
 setInterval(() => {
+
     current++;
-    if(current >= images.length){
+
+    if (current >= images.length) {
+
         current = 0;
+
     }
-    slider.src = images[current];
+
+    showImage(current);
+
 }, 4000);
+// ===============================
+// PART 2
+// SPIN WHEEL
+// ===============================
 
-
-// ---------- Spin Wheel ----------
 const canvas = document.getElementById("wheelCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -88,45 +174,42 @@ const reasons = [
 ];
 
 const colors = [
-    "#ffb3d9",
-    "#d9b3ff",
-    "#ffd6a5",
-    "#b8f2e6",
-    "#ffc8dd",
-    "#cdb4db"
+    "#f8b4ff",
+    "#d5b8ff"
 ];
 
-function drawWheel(){
+function drawWheel() {
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const angle = (Math.PI*2)/reasons.length;
+    const angle = (Math.PI * 2) / reasons.length;
 
-    for(let i=0;i<reasons.length;i++){
+    for (let i = 0; i < reasons.length; i++) {
 
         ctx.beginPath();
-        ctx.moveTo(160,160);
+        ctx.moveTo(160, 160);
+
         ctx.arc(
             160,
             160,
             150,
-            angle*i,
-            angle*(i+1)
+            angle * i,
+            angle * (i + 1)
         );
 
-        ctx.fillStyle = colors[i];
+        ctx.fillStyle = colors[i % colors.length];
         ctx.fill();
 
         ctx.save();
 
-        ctx.translate(160,160);
-        ctx.rotate(angle*i + angle/2);
+        ctx.translate(160, 160);
+        ctx.rotate(angle * i + angle / 2);
 
-        ctx.fillStyle="#333";
-        ctx.font="bold 15px Poppins";
-        ctx.textAlign="center";
+        ctx.fillStyle = "#333";
+        ctx.font = "16px Poppins";
+        ctx.textAlign = "center";
 
-        ctx.fillText(reasons[i],90,5);
+        ctx.fillText(reasons[i], 95, 5);
 
         ctx.restore();
     }
@@ -134,23 +217,23 @@ function drawWheel(){
 
 drawWheel();
 
-let rotation = 0;
+let wheelRotation = 0;
 
-document.getElementById("spin").onclick = () => {
+document.getElementById("spin").addEventListener("click", () => {
 
-    const random = Math.floor(Math.random()*reasons.length);
+    const random = Math.floor(Math.random() * reasons.length);
 
-    rotation += 360*5 + random*60;
+    wheelRotation += 1800 + random * 60;
 
     canvas.style.transition =
         "transform 5s cubic-bezier(.17,.67,.2,1)";
 
     canvas.style.transform =
-        `rotate(${rotation}deg)`;
+        `rotate(${wheelRotation}deg)`;
 
     document.getElementById("spin").disabled = true;
 
-    setTimeout(()=>{
+    setTimeout(() => {
 
         document.getElementById("result").innerHTML =
             "❤️ " + reasons[random];
@@ -159,170 +242,228 @@ document.getElementById("spin").onclick = () => {
 
         confetti();
 
-    },5000);
+    }, 5000);
 
-};
-// ---------- Scratch Card ----------
+});
+
+// ===============================
+// SCRATCH CARD
+// ===============================
+
 const scratch = document.getElementById("scratchCanvas");
 const sctx = scratch.getContext("2d");
 
 scratch.width = 320;
 scratch.height = 140;
 
-sctx.fillStyle = "#b784ff";
-sctx.fillRect(0,0,scratch.width,scratch.height);
+function resetScratch() {
 
-sctx.fillStyle = "#ffffff";
-sctx.font = "bold 24px Poppins";
-sctx.textAlign = "center";
-sctx.fillText("Scratch Here ❤️",160,75);
+    sctx.globalCompositeOperation = "source-over";
+
+    sctx.fillStyle = "#b784ff";
+    sctx.fillRect(0, 0, scratch.width, scratch.height);
+
+    sctx.fillStyle = "#ffffff";
+    sctx.font = "24px Poppins";
+    sctx.textAlign = "center";
+
+    sctx.fillText(
+        "Scratch Here ❤️",
+        scratch.width / 2,
+        75
+    );
+}
+
+resetScratch();
 
 let scratching = false;
 
-function erase(x,y){
-    sctx.globalCompositeOperation = "destination-out";
-    sctx.beginPath();
-    sctx.arc(x,y,20,0,Math.PI*2);
-    sctx.fill();
-}
-
-// Desktop
-scratch.addEventListener("mousedown",()=>{
+scratch.addEventListener("mousedown", () => {
     scratching = true;
 });
 
-scratch.addEventListener("mouseup",()=>{
+scratch.addEventListener("mouseup", () => {
     scratching = false;
 });
 
-scratch.addEventListener("mouseleave",()=>{
+scratch.addEventListener("mouseleave", () => {
     scratching = false;
 });
 
-scratch.addEventListener("mousemove",(e)=>{
+scratch.addEventListener("mousemove", (e) => {
 
-    if(!scratching) return;
+    if (!scratching) return;
 
     const rect = scratch.getBoundingClientRect();
 
-    erase(
-        e.clientX - rect.left,
-        e.clientY - rect.top
-    );
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    sctx.globalCompositeOperation = "destination-out";
+
+    sctx.beginPath();
+    sctx.arc(x, y, 18, 0, Math.PI * 2);
+    sctx.fill();
 
 });
 
-// Mobile
-scratch.addEventListener("touchstart",()=>{
-    scratching = true;
-});
+// Touch Support
 
-scratch.addEventListener("touchend",()=>{
-    scratching = false;
-});
-
-scratch.addEventListener("touchmove",(e)=>{
+scratch.addEventListener("touchmove", (e) => {
 
     e.preventDefault();
 
-    if(!scratching) return;
-
     const rect = scratch.getBoundingClientRect();
 
-    erase(
-        e.touches[0].clientX - rect.left,
-        e.touches[0].clientY - rect.top
-    );
+    const x = e.touches[0].clientX - rect.left;
+    const y = e.touches[0].clientY - rect.top;
 
-},{passive:false});
+    sctx.globalCompositeOperation = "destination-out";
 
+    sctx.beginPath();
+    sctx.arc(x, y, 22, 0, Math.PI * 2);
+    sctx.fill();
+
+}, { passive: false });
+// ===============================
+// PART 3
+// FLOATING HEARTS
+// CONFETTI
+// BUTTON EFFECTS
+// ===============================
 
 // ---------- Floating Hearts ----------
-setInterval(()=>{
+
+const heartsContainer = document.getElementById("hearts");
+
+setInterval(() => {
 
     const heart = document.createElement("div");
 
     heart.className = "heart";
     heart.innerHTML = "💜";
 
-    heart.style.left = Math.random()*100 + "%";
+    heart.style.left = Math.random() * 100 + "%";
+
     heart.style.fontSize =
-        (18 + Math.random()*22) + "px";
+        (20 + Math.random() * 20) + "px";
 
     heart.style.animationDuration =
-        (4 + Math.random()*3) + "s";
+        (4 + Math.random() * 4) + "s";
 
-    document.getElementById("hearts")
-    .appendChild(heart);
+    heartsContainer.appendChild(heart);
 
-    setTimeout(()=>{
+    setTimeout(() => {
         heart.remove();
-    },7000);
+    }, 8000);
 
-},500);
+}, 500);
 
+// ===============================
+// BUTTON CLICK EFFECT
+// ===============================
 
-// ---------- Confetti ----------
-function confetti(){
+document.querySelectorAll("button").forEach(btn => {
 
-    const colors = [
-        "#ff4d6d",
-        "#ffd60a",
-        "#06d6a0",
-        "#4cc9f0",
-        "#b5179e",
-        "#8338ec"
-    ];
-
-    for(let i=0;i<120;i++){
-
-        const c = document.createElement("div");
-
-        c.className = "confetti";
-
-        c.style.left = Math.random()*100 + "vw";
-
-        c.style.background =
-            colors[Math.floor(Math.random()*colors.length)];
-
-        c.style.animationDuration =
-            (3 + Math.random()*2) + "s";
-
-        document.body.appendChild(c);
-
-        setTimeout(()=>{
-            c.remove();
-        },5000);
-    }
-}
-
-
-// ---------- Auto Play Music ----------
-window.addEventListener("click",()=>{
-
-    song.play().catch(()=>{});
-
-},{once:true});
-
-
-// ---------- Button Animation ----------
-document.querySelectorAll("button").forEach(btn=>{
-
-    btn.addEventListener("click",()=>{
+    btn.addEventListener("click", () => {
 
         btn.style.transform = "scale(.92)";
 
-        setTimeout(()=>{
-            btn.style.transform = "scale(1)";
-        },150);
+        setTimeout(() => {
+
+            btn.style.transform = "";
+
+        }, 150);
 
     });
 
 });
 
+// ===============================
+// CONFETTI
+// ===============================
 
-// ---------- Scroll Top ----------
-window.scrollTo({
-    top:0,
-    behavior:"smooth"
+function confetti() {
+
+    const colors = [
+        "#ff4d6d",
+        "#ffb703",
+        "#06d6a0",
+        "#8ecae6",
+        "#b5179e",
+        "#7b2cbf"
+    ];
+
+    for (let i = 0; i < 120; i++) {
+
+        const piece = document.createElement("div");
+
+        piece.className = "confetti";
+
+        piece.style.left = Math.random() * 100 + "vw";
+
+        piece.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+
+        piece.style.animationDuration =
+            (3 + Math.random() * 2) + "s";
+
+        document.body.appendChild(piece);
+
+        setTimeout(() => {
+            piece.remove();
+        }, 5000);
+
+    }
+
+}
+
+// ===============================
+// PAGE LOAD
+// ===============================
+
+window.addEventListener("load", () => {
+
+    showImage(current);
+
+    resetScratch();
+
 });
+
+// ===============================
+// KEYBOARD SUPPORT
+// ===============================
+
+document.addEventListener("keydown", (e) => {
+
+    if (!sections[2].classList.contains("hidden")) {
+
+        if (e.key === "ArrowRight") {
+
+            current++;
+
+            if (current >= images.length) current = 0;
+
+            showImage(current);
+
+        }
+
+        if (e.key === "ArrowLeft") {
+
+            current--;
+
+            if (current < 0) current = images.length - 1;
+
+            showImage(current);
+
+        }
+
+    }
+
+});
+
+// ===============================
+// END OF SCRIPT
+// ===============================
+
+console.log("Birthday Surprise Loaded Successfully ❤️");
