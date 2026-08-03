@@ -1,371 +1,39 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-background:linear-gradient(180deg,#f6e8ff,#e7d9ff,#d8c6ff);
-overflow-x:hidden;
-color:#3d2352;
-}
-
-.background{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:
-radial-gradient(circle at top,#ffe5f4 0%,transparent 40%),
-radial-gradient(circle at bottom,#d9bfff 0%,transparent 50%);
-z-index:-1;
-}
-
-section{
-min-height:100vh;
-padding:40px 20px;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
-}
-
-.hidden{
-display:none;
-}
-
-.top-tag{
-background:white;
-padding:12px 28px;
-border-radius:50px;
-font-size:15px;
-font-weight:600;
-color:#8a49ff;
-box-shadow:0 10px 30px rgba(0,0,0,.08);
-margin-bottom:25px;
-}
-
-h1{
-font-size:52px;
-font-weight:700;
-margin-bottom:20px;
-color:#28123d;
-}
-
-h2{
-font-size:40px;
-margin-bottom:15px;
-color:#28123d;
-}
-
-h3{
-font-size:28px;
-margin-bottom:10px;
-}
-
-p{
-font-size:20px;
-line-height:1.8;
-max-width:700px;
-color:#654a83;
-margin-bottom:25px;
-}
-
-button{
-border:none;
-padding:16px 38px;
-border-radius:50px;
-background:linear-gradient(90deg,#7d5cff,#d16dff);
-color:white;
-font-size:18px;
-cursor:pointer;
-transition:.3s;
-margin-top:15px;
-}
-
-button:hover{
-transform:translateY(-4px);
-box-shadow:0 10px 25px rgba(125,92,255,.4);
-}
-
-.letter{
-width:240px;
-height:180px;
-background:#ffd8ea;
-border-radius:20px;
-display:flex;
-align-items:center;
-justify-content:center;
-margin:35px 0;
-box-shadow:0 20px 40px rgba(0,0,0,.12);
-}
-
-.letter img{
-width:120px;
-}
-
-.music-card{
-width:360px;
-background:white;
-padding:25px;
-border-radius:25px;
-box-shadow:0 20px 40px rgba(0,0,0,.08);
-margin-top:30px;
-}
+/* ==========================
+   GALLERY
+========================== */
 
 .slider{
-margin:35px 0;
-}
-
-.slider img{
-width:320px;
-height:420px;
-object-fit:cover;
-border-radius:25px;
-box-shadow:0 20px 45px rgba(0,0,0,.15);
-transition:.4s;
-}
-
-#prev,#next{
-width:60px;
-height:60px;
-border-radius:50%;
-margin:15px;
-font-size:22px;
-}
-
-#wheelCanvas{
-margin-top:25px;
-background:white;
-border-radius:50%;
-box-shadow:0 20px 45px rgba(0,0,0,.12);
-}
-
-#result{
-font-size:24px;
-font-weight:bold;
-margin-top:20px;
-color:#a03cff;
-}
-
-.card{
-width:90%;
-max-width:700px;
-background:white;
-padding:40px;
-border-radius:25px;
-box-shadow:0 20px 45px rgba(0,0,0,.12);
-}
-
-.card p{
-font-size:22px;
-line-height:2;
-}
-
-.scratch-box{
-    position:relative;
-    width:320px;
-    height:140px;
-    margin:30px auto;
-    overflow:hidden;
-    border-radius:20px;
-}
-
-.secret{
-    position:absolute;
-    inset:0;
+    margin:30px 0;
     display:flex;
     justify-content:center;
     align-items:center;
-    flex-direction:column;
-    background:#fff;
-    border-radius:20px;
-    font-family:'Dancing Script',cursive;
-    font-size:34px;
-    color:#8a49ff;
-    text-align:center;
-    z-index:1;
-    user-select:none;
-    box-shadow:0 15px 35px rgba(0,0,0,.15);
-}
-#scratchCanvas{
-    position:absolute;
-    inset:0;
-    width:320px;
-    height:140px;
-    border-radius:20px;
-    z-index:2;
-    cursor:pointer;
-}
-
-.flowers{
-font-size:70px;
-margin:40px 0;
-animation:float 3s infinite;
-}
-
-@keyframes float{
-
-0%{
-transform:translateY(0);
-}
-
-50%{
-transform:translateY(-15px);
-}
-
-100%{
-transform:translateY(0);
-}
-
-}
-
-button:active{
-transform:scale(.95);
-}
-
-@media(max-width:768px){
-
-h1{
-font-size:38px;
-}
-
-h2{
-font-size:30px;
-}
-
-p{
-font-size:18px;
 }
 
 .slider img{
-width:90%;
-height:auto;
+    width:320px;
+    height:420px;
+    object-fit:cover;
+    border-radius:20px;
+    border:8px solid #fff;
+    box-shadow:0 20px 50px rgba(0,0,0,.18);
+    transition:.4s;
 }
 
-.music-card{
-width:95%;
+.slider img:hover{
+    transform:scale(1.03);
 }
 
-.card{
-padding:25px;
+#prev,
+#next{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    margin:12px;
 }
 
-.secret{
-width:90%;
-}
-
-#scratchCanvas{
-width:90%;
-}
-
-}
-/* Floating Hearts */
-
-#hearts{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-pointer-events:none;
-overflow:hidden;
-z-index:999;
-}
-
-.heart{
-position:absolute;
-bottom:-40px;
-font-size:25px;
-animation:floatHeart linear forwards;
-opacity:.8;
-}
-
-@keyframes floatHeart{
-
-0%{
-transform:translateY(0) scale(.5);
-opacity:1;
-}
-
-100%{
-transform:translateY(-120vh) scale(1.4);
-opacity:0;
-}
-
-}
-
-/* Fade Animation */
-
-section{
-animation:fade .8s;
-}
-
-@keyframes fade{
-
-from{
-
-opacity:0;
-
-transform:translateY(30px);
-
-}
-
-to{
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-}
-
-/* Envelope Animation */
-
-.letter{
-
-animation:updown 2s infinite;
-
-}
-
-@keyframes updown{
-
-50%{
-
-transform:translateY(-10px);
-
-}
-
-}
-
-/* Button Glow */
-
-button:hover{
-
-box-shadow:0 0 30px #b965ff;
-
-}
-
-/* Music Card */
-
-.music-card{
-
-transition:.4s;
-
-}
-
-.music-card:hover{
-
-transform:scale(1.03);
-
-}
-/* =========================
-   PREMIUM SPIN WHEEL
-========================= */
+/* ==========================
+   SPIN WHEEL
+========================== */
 
 .wheel-box{
     position:relative;
@@ -386,192 +54,81 @@ transform:scale(1.03);
     height:0;
     border-left:18px solid transparent;
     border-right:18px solid transparent;
-    border-top:35px solid #ff3366;
-    z-index:100;
-    filter:drop-shadow(0 5px 10px rgba(0,0,0,.25));
+    border-top:35px solid #ff4d6d;
+    z-index:20;
 }
 
 #wheelCanvas{
     width:320px;
     height:320px;
     border-radius:50%;
-    border:10px solid #fff;
-    box-shadow:
-    0 0 25px rgba(255,255,255,.8),
-    0 15px 40px rgba(0,0,0,.18);
-    transition:transform 5s cubic-bezier(.17,.67,.2,1);
     background:#fff;
-}
-
-#spin{
-    background:linear-gradient(45deg,#ff4da6,#8b5cf6);
-    font-size:20px;
-    font-weight:600;
-    padding:15px 40px;
+    border:10px solid #fff;
+    box-shadow:0 20px 45px rgba(0,0,0,.18);
+    transition:transform 5s cubic-bezier(.17,.67,.2,1);
 }
 
 #result{
     margin-top:20px;
-    font-size:28px;
+    font-size:24px;
+    font-weight:700;
     color:#ff4da6;
-    font-weight:bold;
 }
 
-/* =========================
-   CONFETTI
-========================= */
-
-.confetti{
-position:fixed;
-top:-20px;
-width:12px;
-height:12px;
-z-index:9999;
-animation:fall linear forwards;
-}
-
-@keyframes fall{
-
-0%{
-transform:translateY(0) rotate(0deg);
-opacity:1;
-}
-
-100%{
-transform:translateY(110vh) rotate(720deg);
-opacity:0;
-}
-
-}
-
-/* =========================
-   BUTTON EFFECT
-========================= */
-
-button{
-transition:.3s;
-}
-
-button:hover{
-transform:translateY(-4px) scale(1.05);
-box-shadow:0 0 30px #b965ff;
-}
-
-button:active{
-transform:scale(.95);
-}
-
-/* =========================
-   GALLERY IMAGE EFFECT
-========================= */
-
-.slider img:hover{
-transform:scale(1.03);
-}
-
-/* =========================
-   MUSIC CARD
-========================= */
-
-.music-card:hover{
-transform:translateY(-8px);
-}
-
-/* =========================
-   FINAL PAGE
-========================= */
-
-.last h1{
-font-size:60px;
-}
-
-.last h2{
-margin-top:20px;
-color:#ff4da6;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:768px){
-
-#wheelCanvas{
-width:280px;
-height:280px;
-}
-
-#pointer{
-font-size:30px;
-top:-18px;
-}
-
-.last h1{
-font-size:42px;
-}
-
-}
-/* ===== Premium Glass Effect ===== */
-
-.music-card,
-.card,
-.letter,
-.secret{
-    background:rgba(255,255,255,.25);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-    border:1px solid rgba(255,255,255,.4);
-}
-
-/* ===== Premium Buttons ===== */
-
-button{
-    background:linear-gradient(135deg,#ff4da6,#8b5cf6);
-    box-shadow:0 15px 35px rgba(139,92,246,.35);
-    transition:.35s;
-}
-
-button:hover{
-    transform:translateY(-5px) scale(1.05);
-    box-shadow:0 25px 50px rgba(139,92,246,.45);
-}
-
-/* ===== Gallery ===== */
-
-.slider img{
-    border:8px solid #fff;
-    box-shadow:0 20px 60px rgba(0,0,0,.18);
-}
-
-.slider img:hover{
-    transform:scale(1.05);
-}
-
-/* ===== Spin Wheel ===== */
-
-#wheelCanvas{
-    border:12px solid #fff;
-    background:#fff;
-    box-shadow:
-        0 0 0 8px #ffb6e6,
-        0 25px 50px rgba(0,0,0,.18);
-}
-
-/* ===== Letter ===== */
+/* ==========================
+   LOVE LETTER
+========================== */
 
 .card{
-    border-radius:30px;
+    width:90%;
+    max-width:700px;
+    padding:40px;
+    border-radius:25px;
+    background:rgba(255,255,255,.25);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,.4);
+    box-shadow:0 20px 40px rgba(0,0,0,.12);
 }
 
 .card h2{
     color:#ff4da6;
+    margin-bottom:20px;
 }
 
 .card p{
+    font-size:22px;
+    line-height:2;
     color:#555;
 }
 
-/* ===== Scratch Card ===== */
+/* ==========================
+   SCRATCH CARD
+========================== */
+
+.scratch-box{
+    position:relative;
+    width:320px;
+    height:140px;
+    margin:30px auto;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.secret{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    background:#ffffff;
+    color:#8b5cf6;
+    font-size:30px;
+    font-family:'Dancing Script',cursive;
+    border-radius:20px;
+    z-index:1;
+    user-select:none;
+}
 
 #scratchCanvas{
     position:absolute;
@@ -579,16 +136,146 @@ button:hover{
     left:0;
     width:100%;
     height:100%;
+    z-index:2;
     border-radius:20px;
     cursor:pointer;
-    z-index:2;
     touch-action:none;
+    box-shadow:0 15px 35px rgba(0,0,0,.18);
+}
+/* ==========================
+   FLOATING HEARTS
+========================== */
+
+#hearts{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:999;
 }
 
-/* ===== Scrollbar ===== */
+.heart{
+    position:absolute;
+    bottom:-40px;
+    font-size:24px;
+    opacity:.8;
+    animation:floatHeart linear forwards;
+}
+
+@keyframes floatHeart{
+    0%{
+        transform:translateY(0) scale(.5);
+        opacity:1;
+    }
+    100%{
+        transform:translateY(-120vh) scale(1.4);
+        opacity:0;
+    }
+}
+
+/* ==========================
+   FADE ANIMATION
+========================== */
+
+section{
+    animation:fade .7s ease;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ==========================
+   ENVELOPE ANIMATION
+========================== */
+
+.letter{
+    animation:floatBox 2.5s ease-in-out infinite;
+}
+
+@keyframes floatBox{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-10px);
+    }
+}
+
+/* ==========================
+   CONFETTI
+========================== */
+
+.confetti{
+    position:fixed;
+    top:-20px;
+    width:12px;
+    height:12px;
+    border-radius:2px;
+    z-index:9999;
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+    0%{
+        transform:translateY(0) rotate(0deg);
+        opacity:1;
+    }
+    100%{
+        transform:translateY(110vh) rotate(720deg);
+        opacity:0;
+    }
+}
+
+/* ==========================
+   FINAL PAGE
+========================== */
+
+.last h1{
+    font-size:58px;
+    color:#ff4da6;
+}
+
+.last h2{
+    margin-top:20px;
+    color:#ff4da6;
+}
+
+.flowers{
+    font-size:70px;
+    margin:35px 0;
+    animation:flowerFloat 3s ease-in-out infinite;
+}
+
+@keyframes flowerFloat{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-15px);
+    }
+}
+
+/* ==========================
+   SCROLLBAR
+========================== */
 
 ::-webkit-scrollbar{
     width:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#f5edff;
 }
 
 ::-webkit-scrollbar-thumb{
@@ -596,6 +283,57 @@ button:hover{
     border-radius:20px;
 }
 
-::-webkit-scrollbar-track{
-    background:#f4edff;
-}
+/* ==========================
+   MOBILE
+========================== */
+
+@media (max-width:768px){
+
+    h1{
+        font-size:36px;
+    }
+
+    h2{
+        font-size:28px;
+    }
+
+    p{
+        font-size:18px;
+    }
+
+    .music-card{
+        width:95%;
+    }
+
+    .slider img{
+        width:90%;
+        height:auto;
+    }
+
+    .wheel-box{
+        width:300px;
+        height:300px;
+    }
+
+    #wheelCanvas{
+        width:280px;
+        height:280px;
+    }
+
+    .scratch-box{
+        width:90%;
+        max-width:320px;
+        height:140px;
+    }
+
+    .card{
+        padding:25px;
+    }
+
+    .flowers{
+        font-size:48px;
+    }
+
+    .last h1{
+        font-size:40px;
+    }
