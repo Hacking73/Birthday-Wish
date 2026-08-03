@@ -101,15 +101,13 @@ const canvas=document.getElementById("wheelCanvas");
 
 const ctx=canvas.getContext("2d");
 
-const reasons=[
-"Your Smile 😊",
-"My Safe Place 🏡",
-"My Happiness 💜",
-"My Forever ❤️",
-"My Best Friend 🌸",
-"My Everything 👑"
-];
-
+const reasons = [
+    "Your Smile 😊",
+    "My Safe Place 🏡",
+    "My Happiness 💜",
+    "My Forever ❤️",
+    "My Best Friend 🌸",
+    "My Everything 👑"
 ];
 
 const colors=[
