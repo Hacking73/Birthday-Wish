@@ -247,8 +247,6 @@ if (scratch) {
 
     const sctx = scratch.getContext("2d");
 
-    scratch.width = 320;
-    scratch.height = 140;
 
     function resetScratch() {
 
