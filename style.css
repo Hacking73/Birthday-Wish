@@ -165,27 +165,36 @@ font-size:22px;
 line-height:2;
 }
 
+.scratch-box{
+    position:relative;
+    width:320px;
+    height:140px;
+    margin:auto;
+}
+
 .secret{
-position:absolute;
-width:320px;
-height:140px;
-display:flex;
-justify-content:center;
-align-items:center;
-background:white;
-border-radius:20px;
-font-size:28px;
-font-family:'Dancing Script',cursive;
-color:#8a49ff;
-box-shadow:0 15px 35px rgba(0,0,0,.12);
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    background:#fff;
+    border-radius:20px;
+    font-size:28px;
+    font-family:'Dancing Script',cursive;
+    color:#8a49ff;
+    z-index:1;
 }
 
 #scratchCanvas{
-width:320px;
-height:140px;
-border-radius:20px;
-cursor:pointer;
-margin-top:0;
+    position:absolute;
+    inset:0;
+    width:320px;
+    height:140px;
+    border-radius:20px;
+    z-index:2;
+    cursor:pointer;
 }
 
 .flowers{
