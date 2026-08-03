@@ -242,115 +242,77 @@ if (canvas) {
 // =====================================
 
 const scratch = document.getElementById("scratchCanvas");
+const sctx = scratch.getContext("2d");
 
-if (scratch) {
+function resetScratch(){
 
-    const sctx = scratch.getContext("2d");
+    sctx.globalCompositeOperation = "source-over";
 
+    sctx.fillStyle = "#b784ff";
+    sctx.fillRect(0,0,scratch.width,scratch.height);
 
-    function resetScratch() {
+    sctx.fillStyle = "#ffffff";
+    sctx.font = "bold 24px Poppins";
+    sctx.textAlign = "center";
+    sctx.textBaseline = "middle";
 
-        sctx.globalCompositeOperation = "source-over";
-
-        sctx.fillStyle = "#B784FF";
-        sctx.fillRect(0, 0, scratch.width, scratch.height);
-
-        sctx.fillStyle = "#fff";
-        sctx.font = "bold 24px Poppins";
-        sctx.textAlign = "center";
-
-        sctx.fillText(
-            "Scratch Here ❤️",
-            scratch.width / 2,
-            75
-        );
-    }
-
-    resetScratch();
-
-    let scratching = false;
-
-    function scratchMove(x, y) {
-
-        sctx.globalCompositeOperation = "destination-out";
-
-        sctx.beginPath();
-        sctx.arc(x, y, 22, 0, Math.PI * 2);
-        sctx.fill();
-
-    }
-
-    // Mouse
-    scratch.addEventListener("mousedown", () => scratching = true);
-    scratch.addEventListener("mouseup", () => scratching = false);
-    scratch.addEventListener("mouseleave", () => scratching = false);
-
-    scratch.addEventListener("mousemove", (e) => {
-
-        if (!scratching) return;
-
-        const rect = scratch.getBoundingClientRect();
-
-        scratchMove(
-            e.clientX - rect.left,
-            e.clientY - rect.top
-        );
-
-    });
-
-    // Touch
-    scratch.addEventListener("touchstart", () => scratching = true);
-    scratch.addEventListener("touchend", () => scratching = false);
-
-    scratch.addEventListener("touchmove", (e) => {
-
-        if (!scratching) return;
-
-        e.preventDefault();
-
-        const rect = scratch.getBoundingClientRect();
-
-        scratchMove(
-            e.touches[0].clientX - rect.left,
-            e.touches[0].clientY - rect.top
-        );
-
-    }, { passive: false });
-
-    document.getElementById("next4")?.addEventListener("click", resetScratch);
+    sctx.fillText(
+        "Scratch Here ❤️",
+        scratch.width/2,
+        scratch.height/2
+    );
 
 }
-// =====================================
-// SCRIPT.JS - PART 3
-// Floating Hearts + Confetti + Keyboard
-// =====================================
 
-// ---------- Floating Hearts ----------
+resetScratch();
 
-const heartsContainer = document.getElementById("hearts");
+let scratching = false;
 
-if (heartsContainer) {
+function scratchMove(x,y){
 
-    setInterval(() => {
+    sctx.globalCompositeOperation="destination-out";
 
-        const heart = document.createElement("div");
-
-        heart.className = "heart";
-        heart.innerHTML = "💜";
-
-        heart.style.left = Math.random() * 100 + "%";
-        heart.style.fontSize = (18 + Math.random() * 20) + "px";
-        heart.style.animationDuration = (4 + Math.random() * 4) + "s";
-
-        heartsContainer.appendChild(heart);
-
-        setTimeout(() => {
-            heart.remove();
-        }, 8000);
-
-    }, 600);
+    sctx.beginPath();
+    sctx.arc(x,y,20,0,Math.PI*2);
+    sctx.fill();
 
 }
+
+scratch.addEventListener("mousedown",()=>scratching=true);
+scratch.addEventListener("mouseup",()=>scratching=false);
+scratch.addEventListener("mouseleave",()=>scratching=false);
+
+scratch.addEventListener("mousemove",(e)=>{
+
+    if(!scratching) return;
+
+    const rect=scratch.getBoundingClientRect();
+
+    scratchMove(
+        e.clientX-rect.left,
+        e.clientY-rect.top
+    );
+
+});
+
+scratch.addEventListener("touchstart",()=>scratching=true);
+
+scratch.addEventListener("touchend",()=>scratching=false);
+
+scratch.addEventListener("touchmove",(e)=>{
+
+    if(!scratching) return;
+
+    e.preventDefault();
+
+    const rect=scratch.getBoundingClientRect();
+
+    scratchMove(
+        e.touches[0].clientX-rect.left,
+        e.touches[0].clientY-rect.top
+    );
+
+},{passive:false});
 
 // =====================================
 // BUTTON CLICK EFFECT
