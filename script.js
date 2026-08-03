@@ -52,8 +52,6 @@ playBtn.innerHTML="▶ Play";
 
 }
 
-}
-
 // ---------- Gallery ----------
 const images=[
 
@@ -92,9 +90,6 @@ document.getElementById("spin").onclick = function(){
     },5000);
 
 }
-
-}
-
 // ---------- Spin Wheel ----------
 
 const canvas=document.getElementById("wheelCanvas");
@@ -151,8 +146,6 @@ ctx.font="16px Poppins";
 ctx.fillText(reasons[i],60,0);
 
 ctx.restore();
-
-}
 
 }
 
@@ -368,7 +361,5 @@ document.body.appendChild(c);
 setTimeout(()=>{
 c.remove();
 },5000);
-
-}
 
 }
